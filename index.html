@@ -286,7 +286,7 @@
                     console.error("Gagal mengupdate status di API:", error);
                     return false;
                 }
-            }
+            },
 
             updateNote: async (id, note) => {
 
@@ -1073,6 +1073,41 @@
                 }
             };
 
+            const handleSaveNote = async (id) => {
+
+                const success = await ApiService.updateNote(
+                    id,
+                    catatanAdmin
+                );
+            
+                if(success){
+            
+                    setData(prev =>
+                        prev.map(item =>
+                            item.id === id
+                            ? {
+                                ...item,
+                                catatanAdmin: catatanAdmin
+                            }
+                            : item
+                        )
+                    );
+            
+                    showToast(
+                        "Catatan berhasil disimpan",
+                        "success"
+                    );
+            
+                } else {
+            
+                    showToast(
+                        "Gagal menyimpan catatan",
+                        "error"
+                    );
+            
+                }
+            };
+            
             const handleCheckStatus = () => {
 
               const result = mediaData.find(item => {
