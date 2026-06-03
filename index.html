@@ -241,7 +241,12 @@
                         bukti: item.BuktiMedia || item.bukti || "",
                         kategori: item.Kategori || item.kategori || "Bronze",
                         status: item.StatusPengajuan || item.status || "Pending",
-                        tanggal: item.tanggal || item.Tanggal || new Date().toISOString()
+                        catatanAdmin: item.CatatanAdmin || "",
+                        tanggal:
+                            item.Timestamp ||
+                            item.tanggal ||
+                            item.Tanggal ||
+                            new Date().toISOString()
                     }));
                     
                     // Update mock local agar konsisten
@@ -282,6 +287,34 @@
                     return false;
                 }
             }
+
+            updateNote: async (id, note) => {
+
+                const payload = {
+                    action: "updateCatatan",
+                    id: id,
+                    catatan: note
+                };
+            
+                try {
+            
+                    await fetch(API_URL,{
+                        method:'POST',
+                        mode:'no-cors',
+                        headers:{
+                            'Content-Type':'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+            
+                    return true;
+            
+                } catch(error){
+            
+                    return false;
+            
+                }
+            },
         };
 
         const { useState, useEffect, useMemo } = React;
@@ -365,6 +398,13 @@
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
+                            <button
+                                onClick={() => onViewChange('status')}
+                                className="text-xs font-display font-bold uppercase tracking-wider text-unfest-cream hover:text-unfest-yellow border-2 border-transparent hover:border-unfest-yellow px-3 py-1.5 rounded-lg transition-all"
+                            >
+                                Cek Status
+                            </button>
+                        
                         {currentView !== 'admin' && (
                             <button 
                                 onClick={() => onViewChange('admin')} 
@@ -844,6 +884,88 @@
             );
         };
 
+
+        const StatusCheckPage = () => {
+            const [keyword, setKeyword] = React.useState('');
+            const [result, setResult] = React.useState(null);
+
+            const handleSearch = async () => {
+                try {
+                    const response = await fetch(API_URL);
+                    const data = await response.json();
+
+                    const found = data.find(item =>
+                        (item.NamaMedia || '').toLowerCase().includes(keyword.toLowerCase())
+                    );
+
+                    setResult(found || false);
+
+                } catch (err) {
+                    console.error(err);
+                }
+            };
+
+            return (
+                <div className="pt-20 pb-20 px-4 max-w-3xl mx-auto">
+
+                    <h2 className="text-3xl font-serif font-black text-center text-unfest-green mb-6">
+                        CEK STATUS PENDAFTARAN
+                    </h2>
+
+                    <div className="flex gap-3 mb-6">
+                        <input
+                            type="text"
+                            placeholder="Masukkan Nama Media"
+                            value={keyword}
+                            onChange={(e)=>setKeyword(e.target.value)}
+                            className="flex-1 border-2 border-unfest-green rounded-lg px-4 py-3"
+                        />
+
+                        <button
+                            onClick={handleSearch}
+                            className="bg-unfest-green text-white px-6 rounded-lg"
+                        >
+                            Cari
+                        </button>
+                    </div>
+        
+                    {result && (
+                        <div className="poster-frame-cream p-6 rounded-xl">
+        
+                            <h3 className="font-bold text-xl mb-4">
+                                {result.NamaMedia}
+                            </h3>
+        
+                            <p>
+                                Status :
+                                <strong> {result.StatusPengajuan}</strong>
+                            </p>
+        
+                            <p>
+                                Kategori :
+                                <strong> {result.Kategori}</strong>
+                            </p>
+        
+                            <p>
+                                Catatan Admin :
+                                <strong>
+                                    {result.CatatanAdmin || '-'}
+                                </strong>
+                            </p>
+        
+                        </div>
+                    )}
+        
+                    {result === false && (
+                        <div className="text-center text-red-500">
+                            Data tidak ditemukan
+                        </div>
+                    )}
+        
+                </div>
+            );
+        };
+        
         // ==========================================
         // COMPONENT Success View
         // ==========================================
@@ -891,7 +1013,10 @@
             const [filterCategory, setFilterCategory] = useState('All');
             const [filterMedia, setFilterMedia] = useState('All');
             const [selectedData, setSelectedData] = useState(null);
+            const [catatanAdmin, setCatatanAdmin] = useState('');
             const [showScriptGuide, setShowScriptGuide] = useState(false);
+            const [searchStatus, setSearchStatus] = useState('');
+            const [statusResult, setStatusResult] = useState(null);
 
             useEffect(() => {
                 if (isLoggedIn) {
@@ -948,6 +1073,21 @@
                 }
             };
 
+            const handleCheckStatus = () => {
+
+              const result = mediaData.find(item => {
+
+                return (
+                  item.namaMedia?.toLowerCase() === searchStatus.toLowerCase()
+                  ||
+                  item.wa?.includes(searchStatus)
+                );
+
+              });
+
+              setStatusResult(result || null);
+            };
+            
             const handleExportCSV = () => {
                 const headers = ['Tanggal', 'Nama Media', 'Jenis', 'PIC', 'Nomor WA', 'Followers', 'Kategori', 'Tautan Media', 'Status'];
                 const csvData = data.map(row => [
@@ -1180,8 +1320,11 @@
                                                     </span>
                                                 </td>
                                                 <td className="px-6 py-4 text-right">
-                                                    <button 
-                                                        onClick={() => setSelectedData(row)} 
+                                                    <button
+                                                        onClick={() => {
+                                                            setSelectedData(row);
+                                                            setCatatanAdmin(row.catatanAdmin || '');
+                                                        }}
                                                         className="px-3 py-1.5 bg-unfest-green text-unfest-cream hover:bg-unfest-yellow hover:text-unfest-charcoal border border-unfest-charcoal rounded text-xs font-display font-bold uppercase transition-all"
                                                     >
                                                         Lihat Detail
@@ -1259,6 +1402,29 @@
                                                 Tidak ada berkas fisik yang diunggah / Menggunakan Mockup URL ({selectedData.bukti || "kosong"})
                                             </div>
                                         )}
+                                    </div>
+
+                                    <div className="border-t-2 border-unfest-green/25 pt-6">
+
+                                        <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-2">
+                                            Catatan Admin
+                                        </p>
+                                    
+                                        <textarea
+                                            value={catatanAdmin}
+                                            onChange={(e)=>setCatatanAdmin(e.target.value)}
+                                            rows="4"
+                                            className="w-full border-2 border-unfest-green rounded-lg p-3"
+                                            placeholder="Tulis catatan untuk media partner..."
+                                        />
+                                    
+                                        <button
+                                            onClick={() => handleSaveNote(selectedData.id)}
+                                            className="mt-3 px-4 py-2 bg-unfest-green text-white rounded-lg"
+                                        >
+                                            Simpan Catatan
+                                        </button>
+                                    
                                     </div>
 
                                     {/* Action buttons to update database state */}
@@ -1436,6 +1602,11 @@ function doPost(e) {
                         {currentView === 'landing' && <LandingPage onNavigate={setCurrentView} config={config} />}
                         {currentView === 'form' && <RegistrationForm config={config} showToast={showToast} onSubmitSuccess={() => setCurrentView('success')} />}
                         {currentView === 'success' && <SuccessView onNavigate={setCurrentView} />}
+                       
+                        {currentView === 'status' && (
+                            <StatusCheckPage />
+                        )}
+                        
                         {currentView === 'admin' && <AdminDashboard showToast={showToast} />}
                     </main>
 
