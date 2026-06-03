@@ -144,10 +144,10 @@
         const MOCK_DB = {
             masterJenisMedia: ["Instagram", "TikTok", "Website", "Radio", "Podcast", "Media Kampus", "YouTube", "X/Twitter"],
             masterKategoriBenefit: [
-                { min: 0, max: 4999, kategori: "Bronze", benefit: "Logo Partner Ukuran S\n1 buah Tiket Reguler Unfest 10\nInstagram Story Share" },
-                { min: 5000, max: 29999, kategori: "Silver", benefit: "Logo Partner Ukuran S\n1 buah Tiket Reguler Unfest 10\nAddlips Penyebutan oleh MC 1x\nInstagram Feed Carousel" },
-                { min: 30000, max: 79999, kategori: "Gold", benefit: "Logo Partner Ukuran M\n2 buah Tiket VIP Unfest 10\nAddlips Penyebutan oleh MC 2x\nAkses Peliputan & Membawa Kamera" },
-                { min: 80000, max: 999999999, kategori: "Platinum", benefit: "Logo Partner Ukuran L\n3 buah Tiket VIP Unfest 10\nAddlips Penyebutan oleh MC 2x\nAkses Peliputan Tim" }
+                { min: 0, max: 4999, kategori: "Bronze", benefit: "Logo Partner Ukuran S\n1 buah Tiket Reguler UNFEST 10\nInstagram Story Share" },
+                { min: 5000, max: 29999, kategori: "Silver", benefit: "Logo Partner Ukuran S\n1 buah Tiket Reguler UNFEST 10\nAddlips Penyebutan oleh MC 1x\nInstagram Feed Carousel" },
+                { min: 30000, max: 79999, kategori: "Gold", benefit: "Logo Partner Ukuran M\n2 buah Tiket VIP UNFEST 10\nAddlips Penyebutan oleh MC 2x\nAkses Peliputan & Membawa Kamera" },
+                { min: 80000, max: 999999999, kategori: "Platinum", benefit: "Logo Partner Ukuran L\n3 buah Tiket VIP UNFEST 10\nAddlips Penyebutan oleh MC 2x\nAkses Peliputan Tim" }
             ],
             masterStatus: ["Pending", "Diproses", "Diterima", "Ditolak"],
             faq: [
@@ -348,12 +348,16 @@
             <nav className="sticky top-0 w-full z-40 bg-unfest-green border-b-6 border-unfest-yellow py-3 shadow-lg">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
                     <div className="flex items-center gap-3 cursor-pointer" onClick={() => onViewChange('landing')}>
-                        <div className="bg-unfest-yellow text-unfest-green p-1.5 rounded-lg border-2 border-unfest-charcoal shadow-md">
-                            <IconWayang className="w-8 h-8" />
+                        <div className="rounded-lg overflow-hidden">
+                            <img
+                                src="logo.png"
+                                alt="Logo Media Partner"
+                                className="w-12 h-12 object-contain"
+                            />
                         </div>
                         <div>
-                            <span className="font-display font-black text-2xl tracking-tighter text-unfest-cream block uppercase leading-none">
-                                UN<span className="text-unfest-yellow">FEST</span> 10
+                            <span className="font-display font-black text-2xl tracking-tighter text-unfest-red block uppercase leading-none">
+                                UN<span className="text-unfest-red">FEST</span> 10
                             </span>
                             <span className="text-[10px] text-unfest-yellow tracking-widest font-mono font-bold block uppercase leading-none mt-1">
                                 Perayaan 10 Tahun
