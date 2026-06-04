@@ -142,9 +142,12 @@
                 { min: 80000, max: 999999999, kategori: "Platinum", benefit: "Logo Partner Ukuran L\n3 buah Tiket VIP UNFEST 10\nAddlips Penyebutan oleh MC 2x\nAkses Peliputan Tim" }
             ],
             masterStatus: ["Pending", "Diproses", "Diterima", "Ditolak"],
-            faq: [
-                { q: "Apakah ada biaya pendaftaran untuk menjadi Media Partner?", a: "Tidak ada biaya sama sekali. Kerja sama ini bersifat barter benefit yang saling menguntungkan kedua belah pihak." },
-                { q: "Bagaimana cara penentuan kategori Media Partner?", a: "Kategori ditentukan secara otomatis oleh sistem berdasarkan jumlah pengikut (Followers/Subscribers) riil yang divalidasi oleh tim penilai." },
+            informasiPenting: [
+              "Pastikan akun media sosial tidak dalam status private.",
+              "Tim Media Partner akan menghubungi PIC maksimal 3x24 jam setelah pendaftaran.",
+              "Aset promosi dan panduan logo akan dikirim setelah proses kurasi selesai.",
+              "Pastikan email dan nomor WhatsApp yang didaftarkan aktif.",
+              "Benefit media partner diberikan sesuai kategori yang diperoleh."
             ],
             pendaftar: []
         };
@@ -229,6 +232,7 @@
                         namaMedia: item.NamaMedia || item.namaMedia || "-",
                         jenisMedia: item.JenisMedia || item.jenisMedia || "-",
                         pic: item.NamaPIC || item.pic || "-",
+                        email: item.Email || item.email || "-",
                         wa: item["CP (Nomor WA)"] || item.wa || "-",
                         followers: parseInt(item.JumlahFollowers || item.followers || 0),
                         url: item.LinkMediaSosial || item.url || "",
@@ -475,36 +479,28 @@
                     <section className="py-16 bg-unfest-cream border-t-6 border-unfest-yellow">
                         <div className="max-w-3xl mx-auto px-4">
                             <div className="text-center mb-12">
-                                <span className="font-mono font-bold text-xs tracking-widest text-unfest-green uppercase">
-                                    INFO PENTING PENDAFTARAN
-                                </span>
                                 <h2 className="font-serif font-black text-3xl sm:text-4xl text-unfest-charcoal uppercase tracking-tight mt-2">
-                                    Pertanyaan Umum (FAQ)
+                                    INFO PENTING PENDAFTARAN
                                 </h2>
                             </div>
 
                             <div className="space-y-4">
-                                {config?.faq.map((faq, idx) => (
-                                    <div key={idx} className="bg-unfest-cream border-3 border-unfest-green rounded-xl p-4 sm:p-6 shadow-[3px_3px_0px_#ffd300]">
-                                        <button 
-                                            className="w-full text-left flex justify-between items-center focus:outline-none"
-                                            onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                                        >
-                                            <span className="font-display font-black text-base sm:text-lg text-unfest-green uppercase">
-                                                {faq.q}
-                                            </span>
-                                            <div className="text-unfest-green">
-                                                {openFaq === idx ? <IconChevronUp /> : <IconChevronDown />}
-                                            </div>
-                                        </button>
-                                        {openFaq === idx && (
-                                            <div className="mt-4 pt-4 border-t-2 border-dashed border-unfest-green/30 text-unfest-charcoal/80 text-sm font-medium leading-relaxed">
-                                                {faq.a}
-                                            </div>
-                                        )}
+                                {config.informasiPenting.map((info, index) => (
+                                  <div
+                                    key={index}
+                                    className="bg-unfest-cream rounded-xl p-4 border-l-4 border-unfest-yellow"
+                                  >
+                                    <div className="flex items-start gap-3">
+                                      <div className="bg-unfest-yellow text-unfest-charcoal rounded-full p-1">
+                                        <IconCheck />
+                                      </div>
+                                
+                                      <p className="font-semibold text-unfest-green">
+                                        {info}
+                                      </p>
                                     </div>
+                                  </div>
                                 ))}
-                            </div>
                         </div>
                     </section>
                 </div>
@@ -605,6 +601,7 @@
                         namaMedia: '',
                         jenisMedia: '',
                         pic: '',
+                        email: '',
                         wa: '',
                         followers: '',
                         url: '',
@@ -1069,7 +1066,7 @@
             
             const handleCheckStatus = () => {
 
-              const result = Data.find(item => {
+              const result = data.find(item => {
 
                 return (
                   item.namaMedia?.toLowerCase() === searchStatus.toLowerCase()
@@ -1574,7 +1571,7 @@ function doPost(e) {
             const config = useMemo(() => ({
                 jenisMedia: MOCK_DB.masterJenisMedia,
                 kategoriBenefit: MOCK_DB.masterKategoriBenefit,
-                faq: MOCK_DB.faq,
+                informasiPenting: MOCK_DB.informasiPenting,
                 status: MOCK_DB.masterStatus
             }), []);
 
