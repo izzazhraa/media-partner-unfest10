@@ -406,76 +406,45 @@
 
             return (
                 <div className="flex-grow">
-                    <section className="relative overflow-hidden py-16 px-4">
-                        <div className="max-w-5xl mx-auto">
-                            <div className="poster-frame-cream rounded-3xl relative p-8 md:p-12 overflow-hidden text-center">
-                                
-                                <span className="inline-block py-1.5 px-4 bg-unfest-red text-unfest-yellow border-2 border-unfest-charcoal text-xs font-display font-bold uppercase tracking-widest mb-6 shadow-[2px_2px_0px_rgba(6,26,12,1)]">
-                                    ✦ Terbuka untuk Umum ✦
-                                </span>
-
-                                <h1 className="font-serif font-black text-4xl sm:text-6xl md:text-7xl text-unfest-green uppercase tracking-tight leading-none mb-6">
-                                    OPEN <span className="text-unfest-red">MEDIA PARTNER</span><br/>
-                                    <span className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-unfest-charcoal tracking-tighter bg-unfest-yellow px-4 py-1.5 rounded-xl border-3 border-unfest-charcoal inline-block mt-2">
-                                        UNFEST 10
-                                    </span>
-                                </h1>
-
-                                <p className="max-w-2xl mx-auto text-base sm:text-lg font-medium text-unfest-charcoal leading-relaxed mb-8">
-                                    Mari bersama-sama menggemakan kemeriahan perayaan akbar 10 Tahun UNFEST! Daftarkan media publikasi Anda sekarang, bantu sebarluaskan informasi acara, dan terima benefit promosi bernilai tinggi yang langsung terintegrasi dengan Google Sheets.
-                                </p>
-
-                                <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-                                    <button 
-                                        onClick={() => onNavigate('form')}
-                                        className="javanese-btn-gold text-base font-display font-black uppercase px-8 py-4 rounded-xl tracking-wider w-full sm:w-auto"
-                                    >
-                                        Daftar Sekarang ➔
-                                    </button>
-                                </div>
-
-                                <div className="mt-12 flex justify-center items-center gap-6">
-                                    <div className="h-0.5 bg-unfest-green flex-grow opacity-30"></div>
-                                    <span className="font-mono font-bold text-xs tracking-widest text-unfest-green uppercase">Semarang, 2026</span>
-                                    <div className="h-0.5 bg-unfest-green flex-grow opacity-30"></div>
-                                </div>
-                            </div>
+                   <section className="bg-unfest-green py-8">
+                        <div className="max-w-7xl mx-auto px-4">
+                            <img
+                                src="./perayaan unfest.png"
+                                alt="Perayaan 10 Tahun UNFEST"
+                                className="w-full h-auto rounded-2xl shadow-2xl"
+                            />
                         </div>
                     </section>
 
-                    <section className="py-12 bg-unfest-green border-t-6 border-b-6 border-unfest-yellow text-unfest-cream relative">
-                        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <div className="space-y-10">
-                                
-                               <div className="max-w-6xl mx-auto">
-                                    <img
-                                        src="./perayaan unfest.jpeg"
-                                        alt="Perayaan 10 Tahun UNFEST"
-                                        className="w-full h-auto rounded-xl"
-                                    />
-                                </div>
-
-                                {/*INFORMASI PENTING*/}
-                                <div>
-                                    <span className="font-mono font-bold text-xs tracking-widest text-unfest-yellow block uppercase mb-4">
-                                        ✦ INFORMASI PENTING
-                                    </span>
-                                    <div className="space-y-4">
-                                        {[
-                                            "Pastikan akun sosial media Anda tidak berada dalam status terkunci (private) agar mudah diverifikasi.",
-                                            "Tim Media Partner UNFEST 10 akan mengubungi nomor WhatsApp PIC terdaftar selambatnya 3x24 jam setelah registrasi.",
-                                            "Penyediaan aset promosi dan panduan logo akan dikirimkan serentak setelah proses kurasi berkas selesai."
-                                        ].map((text, i) => (
-                                            <div key={i} className="flex gap-3 items-start">
-                                                <div className="bg-unfest-yellow text-unfest-charcoal p-1 rounded-full border border-unfest-charcoal mt-1">
-                                                    <IconCheck />
-                                                </div>
-                                                <p className="text-sm font-semibold text-unfest-cream">{text}</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
+                    
+                    <section className="py-20 px-4 bg-unfest-cream">
+                        <div className="max-w-4xl mx-auto text-center">
+                    
+                            <span className="inline-block py-2 px-5 bg-unfest-red text-unfest-yellow rounded-lg mb-6 font-bold uppercase text-xs tracking-widest">
+                                Terbuka Untuk Umum
+                            </span>
+                    
+                            <h1 className="font-serif font-black text-5xl text-unfest-green mb-4">
+                                OPEN MEDIA PARTNER
+                            </h1>
+                    
+                            <p className="text-xl text-unfest-red font-display mb-8">
+                                Perayaan 10 Tahun UNFEST
+                            </p>
+                    
+                            <p className="max-w-2xl mx-auto text-unfest-charcoal leading-relaxed mb-8">
+                                Mari bersama-sama menggemakan kemeriahan Perayaan 10 Tahun UNFEST.
+                                Daftarkan media publikasi Anda dan jadilah bagian dari kolaborasi
+                                promosi terbesar dalam perjalanan UNFEST.
+                            </p>
+                    
+                            <button
+                                onClick={() => onNavigate('form')}
+                                className="javanese-btn-gold text-base font-display font-black uppercase px-8 py-4 rounded-xl tracking-wider"
+                            >
+                                Daftar Sekarang ➔
+                            </button>
+                    
                         </div>
                     </section>
 
