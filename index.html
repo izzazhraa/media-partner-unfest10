@@ -699,17 +699,13 @@
                                     
                                       <input
                                         type="email"
+                                        name="email"
                                         value={formData.email}
-                                        onChange={(e) =>
-                                          setFormData({
-                                            ...formData,
-                                            email: e.target.value
-                                          })
-                                        }
+                                        onChange={handleChange}
+                                        className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3"
                                         placeholder="contoh@email.com"
-                                        className="w-full"
                                         required
-                                      />
+                                    />
                                     </div>
                                     <div>
                                         <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
@@ -799,7 +795,7 @@
                                 
                                 <button 
                                     type="submit" 
-                                    disabled={isSubmitting} || !agreeBenefit}
+                                    disabled={isSubmitting || !agreeBenefit}
                                     className="w-full flex items-center justify-center py-4 bg-unfest-red text-unfest-cream border-3 border-unfest-charcoal font-display font-black uppercase text-base tracking-widest rounded-xl shadow-[4px_4px_0px_0px_#ffd300] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {isSubmitting ? (
@@ -1021,13 +1017,6 @@
 
             const handleLogin = (e) => {
                 e.preventDefault();
-                if (!agreeBenefit) {
-                    showToast(
-                        "Silakan centang persetujuan benefit terlebih dahulu.",
-                        "error"
-                    );
-                    return;
-                }
                 if (password === 'cacamaricaee') {
                     setIsLoggedIn(true);
                     showToast('Akses masuk admin berhasil disetujui!', 'success');
