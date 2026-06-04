@@ -342,10 +342,32 @@
         // ==========================================
         // COMPONENT Navbar
         // ==========================================
-        const Navbar = ({ onViewChange, currentView }) => (
+        const Navbar = ({ onViewChange, currentView }) => {
+        const [secretClick, setSecretClick] = useState(0);
+            const handleSecretAdmin = () => {
+                const count = secretClick + 1;
+            
+                if (count >= 5) {
+                    onViewChange('admin');
+                    setSecretClick(0);
+                    return;
+                }
+            
+                setSecretClick(count);
+            
+                setTimeout(() => {
+                    setSecretClick(0);
+                }, 3000);
+            };
             <nav className="sticky top-0 w-full z-40 bg-unfest-green border-b-6 border-unfest-yellow py-3 shadow-lg">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-                    <div className="flex items-center gap-3 cursor-pointer" onClick={() => onViewChange('landing')}>
+                    <div
+                        className="flex items-center gap-3 cursor-pointer"
+                        onClick={() => {
+                            onViewChange('landing');
+                            handleSecretAdmin();
+                        }}
+                    >
                         <div className="rounded-lg overflow-hidden">
                             <img
                                 src="logounfest.png"
@@ -370,14 +392,6 @@
                                 Cek Status
                             </button>
                         
-                        {currentView !== 'admin' && (
-                            <button 
-                                onClick={() => onViewChange('admin')} 
-                                className="text-xs font-display font-bold uppercase tracking-wider text-unfest-cream hover:text-unfest-yellow border-2 border-transparent hover:border-unfest-yellow px-3 py-1.5 rounded-lg transition-all"
-                            >
-                                Admin Login
-                            </button>
-                        )}
                         {currentView === 'admin' && (
                             <button 
                                 onClick={() => onViewChange('landing')} 
@@ -396,6 +410,7 @@
                 </div>
             </nav>
         );
+        };
 
         // ==========================================
         // COMPONENT Landing Page
@@ -434,7 +449,7 @@
                             <p className="max-w-2xl mx-auto text-unfest-charcoal leading-relaxed mb-8">
                                 Mari bersama-sama menggemakan kemeriahan Perayaan 10 Tahun UNFEST.
                                 Daftarkan media publikasi Anda dan jadilah bagian dari kolaborasi
-                                promosi terbesar dalam perjalanan UNFEST.
+                                promosi dalam perjalanan UNFEST.
                             </p>
                     
                             <button
