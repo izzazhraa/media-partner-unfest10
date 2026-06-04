@@ -344,21 +344,31 @@
         // ==========================================
         const Navbar = ({ onViewChange, currentView }) => {
         const [secretClick, setSecretClick] = useState(0);
+            
             const handleSecretAdmin = () => {
                 const count = secretClick + 1;
             
-                if (count >= 5) {
-                    onViewChange('admin');
+                 if (count >= 5) {
+                    const password = prompt("Masukkan Kode Admin");
+        
+                    if (password === "cacamaricaee") {
+                        onViewChange('admin');
+                    } else {
+                        alert("Kode Admin Salah!");
+                    }
+        
                     setSecretClick(0);
                     return;
                 }
-            
+        
                 setSecretClick(count);
             
                 setTimeout(() => {
                     setSecretClick(0);
                 }, 3000);
             };
+
+            return(
             <nav className="sticky top-0 w-full z-40 bg-unfest-green border-b-6 border-unfest-yellow py-3 shadow-lg">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
                     <div
@@ -409,7 +419,7 @@
                     </div>
                 </div>
             </nav>
-        );
+            );
         };
 
         // ==========================================
@@ -1059,7 +1069,7 @@
             
             const handleCheckStatus = () => {
 
-              const result = mediaData.find(item => {
+              const result = Data.find(item => {
 
                 return (
                   item.namaMedia?.toLowerCase() === searchStatus.toLowerCase()
