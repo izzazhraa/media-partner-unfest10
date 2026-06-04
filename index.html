@@ -526,6 +526,7 @@
             const [fileName, setFileName] = useState('');
             const [isSubmitting, setIsSubmitting] = useState(false);
             const [calculatedCategory, setCalculatedCategory] = useState(null);
+            const [agreeBenefit, setAgreeBenefit] = useState(false);
 
             useEffect(() => {
                 if (formData.followers && config?.kategoriBenefit) {
@@ -624,14 +625,15 @@
             return (
                 <div className="pt-10 pb-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex-grow">
                     <div className="text-center mb-10">
-                        <span className="font-mono font-bold text-xs tracking-widest text-unfest-yellow uppercase bg-unfest-green border border-unfest-yellow px-3 py-1 rounded inline-block mb-3">
+                        <span className="inline-block bg-unfest-green text-unfest-yellow px-6 py-3 rounded-xl border-2 border-unfest-yellow font-display font-black text-lg sm:text-xl uppercase tracking-widest shadow-md mb-4">
                             ✦ PENDAFTARAN MITRA ✦
                         </span>
-                        <h2 className="font-serif font-black text-3xl sm:text-5xl text-unfest-cream uppercase tracking-tight">
-                            Formulir Media Partner
+                       <h2 className="font-serif font-black text-3xl sm:text-5xl text-unfest-green uppercase mb-3">
+                            Form Registrasi Media Partner
                         </h2>
-                        <p className="text-unfest-cream/70 max-w-md mx-auto text-sm mt-2">
-                            Pastikan data diisi secara akurat karena kategori benefit diproses secara otomatis oleh sistem.
+                        
+                        <p className="text-unfest-green/80 max-w-xl mx-auto">
+                            Isi data dengan benar. Benefit akan diberikan sesuai kategori media.
                         </p>
                     </div>
 
@@ -778,9 +780,26 @@
                                     </div>
                                 </div>
 
+                                <div className="bg-unfest-creamDark/30 border-2 border-unfest-green rounded-xl p-4">
+                                    <label className="flex items-start gap-3 cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            checked={agreeBenefit}
+                                            onChange={(e) => setAgreeBenefit(e.target.checked)}
+                                            className="mt-1 w-5 h-5"
+                                        />
+                                
+                                        <span className="text-sm text-unfest-green font-medium">
+                                            Saya telah membaca, memahami, dan menyetujui kategori benefit
+                                            Media Partner UNFEST 10 yang diberikan berdasarkan jumlah
+                                            followers/media yang didaftarkan.
+                                        </span>
+                                    </label>
+                                </div>
+                                
                                 <button 
                                     type="submit" 
-                                    disabled={isSubmitting}
+                                    disabled={isSubmitting} || !agreeBenefit}
                                     className="w-full flex items-center justify-center py-4 bg-unfest-red text-unfest-cream border-3 border-unfest-charcoal font-display font-black uppercase text-base tracking-widest rounded-xl shadow-[4px_4px_0px_0px_#ffd300] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {isSubmitting ? (
@@ -1002,6 +1021,13 @@
 
             const handleLogin = (e) => {
                 e.preventDefault();
+                if (!agreeBenefit) {
+                    showToast(
+                        "Silakan centang persetujuan benefit terlebih dahulu.",
+                        "error"
+                    );
+                    return;
+                }
                 if (password === 'cacamaricaee') {
                     setIsLoggedIn(true);
                     showToast('Akses masuk admin berhasil disetujui!', 'success');
