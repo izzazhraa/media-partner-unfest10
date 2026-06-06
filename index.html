@@ -156,9 +156,7 @@
             // Mengirim data form pendaftaran ke Google Spreadsheet menggunakan POST
             submitForm: async (formData) => {
                 // Mencari kategori berdasarkan followers
-                const followers =
-                    Number(formData.followers1 || 0) +
-                    Number(formData.followers2 || 0);
+                const followers = parseInt(formData.followers) || 0;
                 let kategori = "Bronze";
                 for (const kb of MOCK_DB.masterKategoriBenefit) {
                     if (followers >= kb.min && followers <= kb.max) {
@@ -170,24 +168,13 @@
                 // Struktur data yang dikirim sesuai requirement
                 const payload = {
                     "action": "submitForm",
-                    
-                    "NamaMedia1": formData.namaMedia1,
-                    "JenisMedia1": formData.jenisMedia1,
-                    "Followers1": formData.followers1,
-                    "LinkMedia1": formData.url1,
-
-                    "NamaMedia2": formData.namaMedia2,
-                    "JenisMedia2": formData.jenisMedia2,
-                    "Followers2": formData.followers2,
-                    "LinkMedia2": formData.url2,
-
+                    "NamaMedia": formData.namaMedia,
+                    "JenisMedia": formData.jenisMedia,
                     "NamaPIC": formData.pic,
                     "Email": formData.email,
-
                     "CP (Nomor WA)": formData.wa,
-                    
                     "JumlahFollowers": followers.toString(),
-                    
+                    "LinkMediaSosial": formData.url,
                     "BuktiMedia": formData.bukti || "", // base64 / URL
                     "Kategori": kategori,
                     "StatusPengajuan": "Pending"
@@ -210,23 +197,13 @@
                     // Memasukkan sementara ke mock lokal agar sinkron instan saat di-preview
                     MOCK_DB.pendaftar.unshift({
                         id: (MOCK_DB.pendaftar.length + 1).toString(),
-                        namaMedia:
-                            formData.namaMedia1 +
-                            (formData.namaMedia2
-                                ? " + " + formData.namaMedia2
-                                : ""),
-                        
-                        jenisMedia:
-                            formData.jenisMedia1 +
-                            (formData.jenisMedia2
-                                ? " + " + formData.jenisMedia2
-                                : ""),
-                        
-                        followers: followers,
-                        url: formData.url1,
+                        namaMedia: formData.namaMedia,
+                        jenisMedia: formData.jenisMedia,
                         pic: formData.pic,
                         email:formData.email,
                         wa: formData.wa,
+                        followers: followers,
+                        url: formData.url,
                         bukti: formData.bukti || "Screenshot_Uploaded_File",
                         kategori: kategori,
                         status: "Pending",
@@ -252,25 +229,13 @@
                     // Memetakan struktur data sheets ke struktur state React
                     const normalized = data.map((item, idx) => ({
                         id: item.id || (idx + 1).toString(),
-                        namaMedia:
-                            (item.NamaMedia1 || "-") +
-                            (
-                                item.NamaMedia2
-                                    ? " + " + item.NamaMedia2
-                                    : ""
-                            ),
-                        jenisMedia:
-                            (item.JenisMedia1 || "-") +
-                            (
-                                item.JenisMedia2
-                                    ? " + " + item.JenisMedia2
-                                    : ""
-                            ),
+                        namaMedia: item.NamaMedia || item.namaMedia || "-",
+                        jenisMedia: item.JenisMedia || item.jenisMedia || "-",
                         pic: item.NamaPIC || item.pic || "-",
                         email: item.Email || item.email || "-",
                         wa: item["CP (Nomor WA)"] || item.wa || "-",
                         followers: parseInt(item.JumlahFollowers || item.followers || 0),
-                        url: item.LinkMedia1 || item.url || "",
+                        url: item.LinkMediaSosial || item.url || "",
                         bukti: item.BuktiMedia || item.bukti || "",
                         kategori: item.Kategori || item.kategori || "Bronze",
                         status: item.StatusPengajuan || item.status || "Pending",
@@ -549,20 +514,13 @@
         // ==========================================
         const RegistrationForm = ({ config, onSubmitSuccess, showToast }) => {
             const [formData, setFormData] = useState({
-                namaMedia1: '',
-                jenisMedia1: '',
-                followers1: '',
-                url1: '',
-
-                namaMedia2: '',
-                jenisMedia2: '',
-                followers2: '',
-                url2: '',
-                
+                namaMedia: '',
+                jenisMedia: '',
                 pic: '',
                 email: '',
                 wa: '',
-                
+                followers: '',
+                url: '',
                 bukti: null
             });
             const [fileName, setFileName] = useState('');
@@ -571,36 +529,19 @@
             const [agreeBenefit, setAgreeBenefit] = useState(false);
 
             useEffect(() => {
-                const totalFollowers =
-                    Number(formData.followers1 || 0) +
-                    Number(formData.followers2 || 0);
-                
-                if (
-                    config?.kategoriBenefit &&
-                    totalFollowers >= 0
-                ){
-                    const count =
-                        Number(formData.followers1 || 0) +
-                        Number(formData.followers2 || 0);
+                if (formData.followers && config?.kategoriBenefit) {
+                    const count = parseInt(formData.followers);
                     const found = config.kategoriBenefit.find(c => count >= c.min && count <= c.max);
                     setCalculatedCategory(found || null);
                 } else {
                     setCalculatedCategory(null);
                 }
-            }, [
-                formData.followers1,
-                formData.followers2,
-                config
-               ]);
+            }, [formData.followers, config]);
 
             const handleChange = (e) => {
                 const { name, value } = e.target;
                 if (name === 'wa' && !/^[0-9]*$/.test(value)) return;
-                if (
-                    (name === 'followers1' || name === 'followers2')
-                    &&
-                    !/^[0-9]*$/.test(value)
-                ) return;
+                if (name === 'followers' && !/^[0-9]*$/.test(value)) return;
                 setFormData(prev => ({ ...prev, [name]: value }));
             };
 
@@ -633,73 +574,15 @@
             const handleSubmit = async (e) => {
                 e.preventDefault();
 
-                if (!agreeBenefit) {
-                    showToast(
-                        'Anda harus membaca dan menyetujui benefit terlebih dahulu.',
-                        'error'
-                    );
-                    return;
-                }
-
                 if (formData.wa.length < 9 || formData.wa.length > 15) {
                     showToast('Nomor WhatsApp tidak valid (harus 9-15 digit angka)!', 'error');
                     return;
                 }
 
-                if (
-                    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
-                ) {
-                    showToast(
-                        'Format email tidak valid!',
-                        'error'
-                    );
-                    return;
-                }
-
                 try {
-                    new URL(
-                        formData.url1.startsWith('http')
-                            ? formData.url1
-                            : `https://${formData.url1}`
-                    );
-                
-                    if (formData.url2) {
-                        new URL(
-                            formData.url2.startsWith('http')
-                                ? formData.url2
-                                : `https://${formData.url2}`
-                        );
-                    }
-                    
-                   const media2Filled =
-                        formData.namaMedia2 ||
-                        formData.jenisMedia2 ||
-                        formData.followers2 ||
-                        formData.url2;
-                    
-                    if (
-                        media2Filled &&
-                        (
-                            !formData.namaMedia2 ||
-                            !formData.jenisMedia2 ||
-                            !formData.followers2 ||
-                            !formData.url2
-                        )
-                    ) {
-                        showToast(
-                            "Jika Media Kedua diisi, seluruh data Media Kedua harus lengkap.",
-                            "error"
-                        );
-                        return;
-                    }
-                                        
+                    new URL(formData.url.startsWith('http') ? formData.url : `https://${formData.url}`);
                 } catch (_) {
-                
-                    showToast(
-                        'Harap masukkan tautan media sosial yang valid!',
-                        'error'
-                    );
-                
+                    showToast('Harap masukkan tautan media sosial yang valid!', 'error');
                     return;
                 }
 
@@ -717,26 +600,18 @@
                     showToast("Pengajuan media partner berhasil dikirim.", "success");
                     
                     // Reset fields formulir
-                     setFormData({
-                        namaMedia1: '',
-                        jenisMedia1: '',
-                        followers1: '',
-                        url1: '',
-                    
-                        namaMedia2: '',
-                        jenisMedia2: '',
-                        followers2: '',
-                        url2: '',
-                    
+                    setFormData({
+                        namaMedia: '',
+                        jenisMedia: '',
                         pic: '',
                         email: '',
                         wa: '',
-                    
+                        followers: '',
+                        url: '',
                         bukti: null
                     });
                     setFileName('');
                     setCalculatedCategory(null);
-                    setAgreeBenefit(false);
                     
                     onSubmitSuccess();
                 } catch (error) {
@@ -765,85 +640,45 @@
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                         <div className="lg:col-span-8 poster-frame-cream rounded-2xl p-6 sm:p-8">
                             <form onSubmit={handleSubmit} className="space-y-6">
-                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div>
                                         <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
-                                            Media Utama *
+                                            Nama Media Publikasi *
                                         </label>
-                                
-                                        <input
-                                            type="text"
-                                            name="namaMedia1"
-                                            value={formData.namaMedia1}
+                                        <input 
+                                            type="text" 
+                                            name="namaMedia" 
+                                            required 
+                                            value={formData.namaMedia} 
                                             onChange={handleChange}
-                                            required
-                                            className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3"
+                                            className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-medium focus:outline-none focus:ring-2 focus:ring-unfest-yellow"
+                                            placeholder="Cth: Suara Jogja Gigs" 
                                         />
                                     </div>
-                                
                                     <div>
                                         <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
-                                            Media Kedua (Opsional)
+                                            Jenis Media Publikasi *
                                         </label>
-                                
-                                        <input
-                                            type="text"
-                                            name="namaMedia2"
-                                            value={formData.namaMedia2}
-                                            onChange={handleChange}
-                                            className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3"
-                                            placeholder="Cth: Konser Semarang"
-                                        />
-                                    </div>
-                                
-                                </div>
-                                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
-                                            <div>
-                                                <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
-                                                    Jenis Media Utama *
-                                                </label>
-                                        
-                                                <select
-                                                    name="jenisMedia1"
-                                                    value={formData.jenisMedia1}
-                                                    onChange={handleChange}
-                                                    required
-                                                    className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3"
-                                                >
-                                                    <option value="">Pilih Jenis Media</option>
-                                        
-                                                    {config?.jenisMedia.map(j => (
-                                                        <option key={j} value={j}>
-                                                            {j}
-                                                        </option>
-                                                    ))}
-                                                </select>
+                                        <div className="relative">
+                                            <select 
+                                                name="jenisMedia" 
+                                                required 
+                                                value={formData.jenisMedia} 
+                                                onChange={handleChange}
+                                                className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-medium appearance-none focus:outline-none focus:ring-2 focus:ring-unfest-yellow"
+                                            >
+                                                <option value="" disabled>Pilih Jenis</option>
+                                                {config?.jenisMedia.map(j => <option key={j} value={j}>{j}</option>)}
+                                            </select>
+                                            <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-unfest-green">
+                                                <IconChevronDown />
                                             </div>
-                                        
-                                            <div>
-                                                <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
-                                                    Jenis Media Kedua (Opsional)
-                                                </label>
-                                        
-                                                <select
-                                                    name="jenisMedia2"
-                                                    value={formData.jenisMedia2}
-                                                    onChange={handleChange}
-                                                    className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3"
-                                                >
-                                                    <option value="">Pilih Jenis Media</option>
-                                        
-                                                    {config?.jenisMedia.map(j => (
-                                                        <option key={j} value={j}>
-                                                            {j}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            </div>
-                                        
                                         </div>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div>
                                         <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
                                             Nama Lengkap PIC (Penanggung Jawab) *
                                         </label>
@@ -868,7 +703,7 @@
                                         value={formData.email}
                                         onChange={handleChange}
                                         className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3"
-                                        placeholder="contoh: unfest@gmail.com"
+                                        placeholder="contoh@email.com"
                                         required
                                     />
                                     </div>
@@ -891,64 +726,35 @@
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div>
                                         <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
-                                            Jumlah Pengikut / Followers Media 1 *
+                                            Jumlah Pengikut / Followers Utama *
                                         </label>
                                         <input 
                                             type="text" 
-                                            name="followers1" 
+                                            name="followers" 
                                             required 
-                                            value={formData.followers1} 
+                                            value={formData.followers} 
                                             onChange={handleChange}
                                             className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-mono font-bold text-lg focus:outline-none"
                                             placeholder="Cth: 15400" 
                                         />
-                                         <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
-                                            Jumlah Pengikut / Followers Media 2 (Opsional)*
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
+                                            Tautan Utama Profil Media / Website *
                                         </label>
                                         <input 
                                             type="text" 
-                                            name="followers2" 
-                                            value={formData.followers2} 
+                                            name="url" 
+                                            required 
+                                            value={formData.url} 
                                             onChange={handleChange}
-                                            className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-mono font-bold text-lg focus:outline-none"
-                                            placeholder="Cth: 15400" 
+                                            className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-medium focus:outline-none"
+                                            placeholder="Cth: instagram.com/gamelangigs" 
                                         />
                                     </div>
-                                    
-                                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                </div>
 
-                                        <div>
-                                            <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
-                                                Tautan Utama Profil Media / Website *
-                                            </label>
-                                    
-                                            <input
-                                                type="text"
-                                                name="url1"
-                                                value={formData.url1}
-                                                onChange={handleChange}
-                                                required
-                                                className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3"
-                                                placeholder="https://instagram.com/mediaanda"
-                                            />
-                                        </div>
-                                    
-                                        <div>
-                                            <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
-                                                Link Media Kedua (Opsional)
-                                            </label>
-                                    
-                                            <input
-                                                type="text"
-                                                name="url2"
-                                                value={formData.url2}
-                                                onChange={handleChange}
-                                                className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3"
-                                                placeholder="https://instagram.com/mediaanda2"
-                                            />
-                                        </div>
-                                    
-                                    </div>
+                                <div>
                                     <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
                                         Unggah Berkas Bukti Analitik *
                                     </label>
@@ -1021,13 +827,7 @@
                                             {calculatedCategory.kategori}
                                         </h4>
                                         <p className="text-[11px] text-unfest-cream/80 font-mono mb-4">
-                                            Berdasarkan {
-                                            (
-                                                Number(formData.followers1 || 0)
-                                                +
-                                                Number(formData.followers2 || 0)
-                                            ).toLocaleString('id-ID')
-                                            }
+                                            Berdasarkan {parseInt(formData.followers).toLocaleString()} Followers
                                         </p>
                                         
                                         <div className="h-0.5 bg-unfest-yellow/20 mb-4"></div>
@@ -1071,13 +871,7 @@
                     const data = await response.json();
 
                     const found = data.find(item =>
-                        (item.NamaMedia || '')
-                            .toLowerCase()
-                            .includes(keyword.toLowerCase())
-                        ||
-                        (item.NamaMedia2 || '')
-                            .toLowerCase()
-                            .includes(keyword.toLowerCase())
+                        (item.NamaMedia || '').toLowerCase().includes(keyword.toLowerCase())
                     );
 
                     setResult(found || false);
@@ -1339,10 +1133,7 @@
                                       item.pic.toLowerCase().includes(searchTerm.toLowerCase());
                 const matchesStatus = filterStatus === 'All' || item.status === filterStatus;
                 const matchesCategory = filterCategory === 'All' || item.kategori === filterCategory;
-                const matchesMedia =
-                        filterMedia === 'All'
-                        ||
-                        item.jenisMedia.includes(filterMedia);
+                const matchesMedia = filterMedia === 'All' || item.jenisMedia === filterMedia;
                 return matchesSearch && matchesStatus && matchesCategory && matchesMedia;
             });
 
@@ -1728,27 +1519,6 @@ function doGet(e) {
 function doPost(e) {
   const data = JSON.parse(e.postData.contents);
   const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-
-
-  <div className="bg-unfest-yellow/10 border-2 border-unfest-yellow rounded-xl p-4 mb-4">
-
-    <p className="font-bold text-unfest-green">
-        Total Followers
-    </p>
-
-    <p className="text-3xl font-black text-unfest-red">
-
-        {
-            (
-                Number(formData.followers1 || 0)
-                +
-                Number(formData.followers2 || 0)
-            ).toLocaleString('id-ID')
-        }
-
-    </p>
-
-</div>
   
   if (data.action === 'submitForm') {
     const followers = Number(data.JumlahFollowers);
@@ -1756,10 +1526,9 @@ function doPost(e) {
     // Konfigurasi kategori benefit fallback statis di sisi Apps Script
     let kategori = "Bronze";
     if (followers >= 0 && followers <= 4999) kategori = "Bronze";
-    else if (followers >= 5000 && followers <= 19999) kategori = "Silver";
-    else if (followers >= 20000 && followers <= 49999) kategori = "Gold";
-    else if (followers >= 50000 && followers <= 99999) kategori = "Platinum";
-    else if (followers >= 100000 && followers <= 9999999) kategori = "Diamond";
+    else if (followers >= 5000 && followers <= 29999) kategori = "Silver";
+    else if (followers >= 30000 && followers <= 79999) kategori = "Gold";
+    else if (followers >= 80000) kategori = "Platinum";
     
     // Unggah tangkapan layar / bukti ke Google Drive
     let fileUrl = "";
