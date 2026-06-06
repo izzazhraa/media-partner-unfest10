@@ -170,8 +170,9 @@
                 // Struktur data yang dikirim sesuai requirement
                 const payload = {
                     "action": "submitForm",
-                    "NamaMedia": formData.namaMedia1,
-                    "JenisMedia": formData.jenisMedia1,
+                    
+                    "NamaMedia1": formData.namaMedia1,
+                    "JenisMedia1": formData.jenisMedia1,
                     "Followers1": formData.followers1,
                     "LinkMedia1": formData.url1,
 
@@ -180,10 +181,13 @@
                     "Followers2": formData.followers2,
                     "LinkMedia2": formData.url2,
 
-                    "JumlahFollowers": followers.toString(),
                     "NamaPIC": formData.pic,
                     "Email": formData.email,
+
                     "CP (Nomor WA)": formData.wa,
+                    
+                    "JumlahFollowers": followers.toString(),
+                    
                     "BuktiMedia": formData.bukti || "", // base64 / URL
                     "Kategori": kategori,
                     "StatusPengajuan": "Pending"
@@ -249,14 +253,14 @@
                     const normalized = data.map((item, idx) => ({
                         id: item.id || (idx + 1).toString(),
                         namaMedia:
-                            (item.NamaMedia || "-") +
+                            (item.NamaMedia1 || "-") +
                             (
                                 item.NamaMedia2
                                     ? " + " + item.NamaMedia2
                                     : ""
                             ),
                         jenisMedia:
-                            (item.JenisMedia || "-") +
+                            (item.JenisMedia1 || "-") +
                             (
                                 item.JenisMedia2
                                     ? " + " + item.JenisMedia2
@@ -571,7 +575,10 @@
                     Number(formData.followers1 || 0) +
                     Number(formData.followers2 || 0);
                 
-                if (totalFollowers && config?.kategoriBenefit) {
+                if (
+                    config?.kategoriBenefit &&
+                    totalFollowers >= 0
+                ){
                     const count =
                         Number(formData.followers1 || 0) +
                         Number(formData.followers2 || 0);
@@ -626,8 +633,26 @@
             const handleSubmit = async (e) => {
                 e.preventDefault();
 
+                if (!agreeBenefit) {
+                    showToast(
+                        'Anda harus membaca dan menyetujui benefit terlebih dahulu.',
+                        'error'
+                    );
+                    return;
+                }
+
                 if (formData.wa.length < 9 || formData.wa.length > 15) {
                     showToast('Nomor WhatsApp tidak valid (harus 9-15 digit angka)!', 'error');
+                    return;
+                }
+
+                if (
+                    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)
+                ) {
+                    showToast(
+                        'Format email tidak valid!',
+                        'error'
+                    );
                     return;
                 }
 
@@ -645,7 +670,29 @@
                                 : `https://${formData.url2}`
                         );
                     }
-                
+                    
+                   const media2Filled =
+                        formData.namaMedia2 ||
+                        formData.jenisMedia2 ||
+                        formData.followers2 ||
+                        formData.url2;
+                    
+                    if (
+                        media2Filled &&
+                        (
+                            !formData.namaMedia2 ||
+                            !formData.jenisMedia2 ||
+                            !formData.followers2 ||
+                            !formData.url2
+                        )
+                    ) {
+                        showToast(
+                            "Jika Media Kedua diisi, seluruh data Media Kedua harus lengkap.",
+                            "error"
+                        );
+                        return;
+                    }
+                                        
                 } catch (_) {
                 
                     showToast(
@@ -689,6 +736,7 @@
                     });
                     setFileName('');
                     setCalculatedCategory(null);
+                    setAgreeBenefit(false);
                     
                     onSubmitSuccess();
                 } catch (error) {
