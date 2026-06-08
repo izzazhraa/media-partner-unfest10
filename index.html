@@ -6,1677 +6,1629 @@
     <title>UNFEST 10 - Media Partner Registration</title>
     
     <!-- Google Fonts: Space Grotesk (Modern Retro Bold), Playfair Display (Elegant Retro Serif), Plus Jakarta Sans (Body text) -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Space Grotesk', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
-                    colors: {
-                        unfest: {
-                            green: '#0b4d24',    // Deep Emerald Green
-                            red: '#c81c1c',      // Vivid Crimson Red
-                            yellow: '#ffd300',   // Sunflower Gold / Kuning Emas
-                            cream: '#fbf6eb',    // Vintage Warm Cream
-                            creamDark: '#f3e8d2',// Darker Cream for shadows
-                            charcoal: '#0b4d24', // Mengganti warna hitam sepenuhnya dengan Deep Emerald Green
-                        }
-                    },
-                    borderWidth: {
-                        '3': '3px',
-                        '6': '6px',
-                    },
-                }
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        darkMode: 'class',
+        theme: {
+            extend: {
+                fontFamily: {
+                    sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    display: ['Space Grotesk', 'sans-serif'],
+                    serif: ['Playfair Display', 'serif'],
+                },
+                colors: {
+                    unfest: {
+                        green: '#0b4d24',    // Deep Emerald Green
+                        red: '#c81c1c',      // Vivid Crimson Red
+                        yellow: '#ffd300',   // Sunflower Gold / Kuning Emas
+                        cream: '#fbf6eb',    // Vintage Warm Cream
+                        creamDark: '#f3e8d2',// Darker Cream for shadows
+                        charcoal: '#0b4d24', // Mengganti warna hitam sepenuhnya dengan Deep Emerald Green
+                    }
+                },
+                borderWidth: {
+                    '3': '3px',
+                    '6': '6px',
+                },
             }
         }
-    </script>
+    }
+</script>
 
-    <!-- React & ReactDOM -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<!-- React & ReactDOM -->
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+
+<!-- Babel for JSX -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<style>
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: #fbf6eb; }
+    ::-webkit-scrollbar-thumb { background: #0b4d24; border: 2px solid #ffd300; border-radius: 5px; }
+    ::-webkit-scrollbar-thumb:hover { background: #c81c1c; }
     
-    <!-- Babel for JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    body { 
+        background-color: #fbf6eb; 
+        color: #0b4d24;
+    }
 
-    <style>
-        ::-webkit-scrollbar { width: 10px; height: 10px; }
-        ::-webkit-scrollbar-track { background: #fbf6eb; }
-        ::-webkit-scrollbar-thumb { background: #0b4d24; border: 2px solid #ffd300; border-radius: 5px; }
-        ::-webkit-scrollbar-thumb:hover { background: #c81c1c; }
-        
-        body { 
-            background-color: #fbf6eb; 
-            color: #0b4d24;
-        }
+    /* Retro Poster Shadow & Frame style dari Screenshot tanpa warna hitam */
+    .poster-frame-red {
+        border: 3px solid #0b4d24;
+        background-color: #fbf6eb;
+        box-shadow: 0 12px 30px rgba(11,77,36,0.15);
+    }
 
-        /* Retro Poster Shadow & Frame style dari Screenshot tanpa warna hitam */
-        .poster-frame-red {
-            border: 3px solid #0b4d24;
-            background-color: #fbf6eb;
-            box-shadow: 0 12px 30px rgba(11,77,36,0.15);
-        }
+    .poster-frame-green {
+        border: 3px double #ffd300;
+        background-color: #0b4d24;
+        box-shadow: 0 12px 30px rgba(200,28,28,0.15);
+    }
 
-        .poster-frame-green {
-            border: 3px double #ffd300;
-            background-color: #0b4d24;
-            box-shadow: 0 12px 30px rgba(200,28,28,0.15);
-        }
+    .poster-frame-cream {
+        border: 5px solid #0b4d24;
+        background-color: #fbf6eb;
+        box-shadow: 0 12px 30px rgba(255,211,0,0.15);
+    }
 
-        .poster-frame-cream {
-            border: 5px solid #0b4d24;
-            background-color: #fbf6eb;
-            box-shadow: 0 12px 30px rgba(255,211,0,0.15);
-        }
+    /* Vintage Block Typography Drop shadow */
+    .retro-text-shadow-yellow {
+        text-shadow: 1px 1px 0px rgba(0,0,0,0.15);
+    }
+    
+    .retro-text-shadow-black {
+        text-shadow: 2px 2px 0px #0b4d24;
+    }
 
-        /* Vintage Block Typography Drop shadow */
-        .retro-text-shadow-yellow {
-            text-shadow: 1px 1px 0px rgba(0,0,0,0.15);
-        }
-        
-        .retro-text-shadow-black {
-            text-shadow: 2px 2px 0px #0b4d24;
-        }
+    .retro-text-shadow-green {
+        text-shadow: 3px 3px 0px #0b4d24, 4px 4px 0px #ffd300;
+    }
 
-        .retro-text-shadow-green {
-            text-shadow: 3px 3px 0px #0b4d24, 4px 4px 0px #ffd300;
-        }
+    /* Neo-Brutalist Javanese Button */
+    .javanese-btn-gold {
+        background-color: #ffd300;
+        color: #0b4d24;
+        border: 3px solid #0b4d24;
+        box-shadow: 4px 4px 0px 0px #0b4d24;
+        transition: all 0.2s ease;
+    }
+    .javanese-btn-gold:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 6px 6px 0px 0px #c81c1c;
+        background-color: #fbf6eb;
+    }
+    .javanese-btn-gold:active {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0px 0px #0b4d24;
+    }
 
-        /* Neo-Brutalist Javanese Button */
-        .javanese-btn-gold {
-            background-color: #ffd300;
-            color: #0b4d24;
-            border: 3px solid #0b4d24;
-            box-shadow: 4px 4px 0px 0px #0b4d24;
-            transition: all 0.2s ease;
-        }
-        .javanese-btn-gold:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0px 0px #c81c1c;
-            background-color: #fbf6eb;
-        }
-        .javanese-btn-gold:active {
-            transform: translate(2px, 2px);
-            box-shadow: 2px 2px 0px 0px #0b4d24;
-        }
+    .javanese-btn-red {
+        background-color: #c81c1c;
+        color: #fbf6eb;
+        border: 3px solid #0b4d24;
+        box-shadow: 4px 4px 0px 0px #ffd300;
+        transition: all 0.2s ease;
+    }
+    .javanese-btn-red:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 6px 6px 0px 0px #0b4d24;
+        background-color: #ffd300;
+        color: #0b4d24;
+    }
+</style>
 
-        .javanese-btn-red {
-            background-color: #c81c1c;
-            color: #fbf6eb;
-            border: 3px solid #0b4d24;
-            box-shadow: 4px 4px 0px 0px #ffd300;
-            transition: all 0.2s ease;
-        }
-        .javanese-btn-red:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0px 0px #0b4d24;
-            background-color: #ffd300;
-            color: #0b4d24;
-        }
-    </style>
-</head>
-<body class="antialiased min-h-screen flex flex-col">
+<div id="root"></div>
 
-    <div id="root"></div>
+<script type="text/babel">
+    // ==========================================
+    // SINKRONISASI API SPREADSHEET UTAMA
+    // ==========================================
+    const API_URL = "https://script.google.com/macros/s/AKfycbwBB-Dc3ZgdZuDDsrFBQmBGBa8R1E-mSkeX4GteqxOjsTLdboJd9zsMrA8jRGSXN8su/exec";
 
-    <script type="text/babel">
-        // ==========================================
-        // SINKRONISASI API SPREADSHEET UTAMA
-        // ==========================================
-        const API_URL = "https://script.google.com/macros/s/AKfycbwBB-Dc3ZgdZuDDsrFBQmBGBa8R1E-mSkeX4GteqxOjsTLdboJd9zsMrA8jRGSXN8su/exec";
+    // Konfigurasi lokal statis sebagai single source of truth untuk konfigurasi
+    const MOCK_DB = {
+        masterJenisMedia: ["Instagram", "TikTok", "Website", "Radio", "Podcast", "Media Kampus", "YouTube", "X/Twitter"],
+        masterKategoriBenefit: [
+            { min: 0, max: 4999, kategori: "Bronze", benefit: "Logo Partner Ukuran S\n1 buah Tiket Reguler UNFEST 10\nInstagram Story Share" },
+            { min: 5000, max: 29999, kategori: "Silver", benefit: "Logo Partner Ukuran S\n1 buah Tiket Reguler UNFEST 10\nAddlips Penyebutan oleh MC 1x\nInstagram Feed Carousel" },
+            { min: 30000, max: 79999, kategori: "Gold", benefit: "Logo Partner Ukuran M\n2 buah Tiket VIP UNFEST 10\nAddlips Penyebutan oleh MC 2x\nAkses Peliputan & Membawa Kamera" },
+            { min: 80000, max: 999999999, kategori: "Platinum", benefit: "Logo Partner Ukuran L\n3 buah Tiket VIP UNFEST 10\nAddlips Penyebutan oleh MC 2x\nAkses Peliputan Tim" }
+        ],
+        masterStatus: ["Pending", "Diproses", "Diterima", "Ditolak"],
+        informasiPenting: [
+          "Pastikan akun media sosial tidak dalam status private.",
+          "Tim Media Partner akan menghubungi PIC maksimal 3x24 jam setelah pendaftaran.",
+          "Aset promosi dan panduan logo akan dikirim setelah proses kurasi selesai.",
+          "Pastikan email dan nomor WhatsApp yang didaftarkan aktif.",
+          "Benefit media partner diberikan sesuai kategori yang diperoleh."
+        ],
+        pendaftar: []
+    };
 
-        // Konfigurasi lokal statis sebagai single source of truth untuk konfigurasi
-        const MOCK_DB = {
-            masterJenisMedia: ["Instagram", "TikTok", "Website", "Radio", "Podcast", "Media Kampus", "YouTube", "X/Twitter"],
-            masterKategoriBenefit: [
-                { min: 0, max: 4999, kategori: "Bronze", benefit: "Logo Partner Ukuran S\n1 buah Tiket Reguler UNFEST 10\nInstagram Story Share" },
-                { min: 5000, max: 29999, kategori: "Silver", benefit: "Logo Partner Ukuran S\n1 buah Tiket Reguler UNFEST 10\nAddlips Penyebutan oleh MC 1x\nInstagram Feed Carousel" },
-                { min: 30000, max: 79999, kategori: "Gold", benefit: "Logo Partner Ukuran M\n2 buah Tiket VIP UNFEST 10\nAddlips Penyebutan oleh MC 2x\nAkses Peliputan & Membawa Kamera" },
-                { min: 80000, max: 999999999, kategori: "Platinum", benefit: "Logo Partner Ukuran L\n3 buah Tiket VIP UNFEST 10\nAddlips Penyebutan oleh MC 2x\nAkses Peliputan Tim" }
-            ],
-            masterStatus: ["Pending", "Diproses", "Diterima", "Ditolak"],
-            informasiPenting: [
-              "Pastikan akun media sosial tidak dalam status private.",
-              "Tim Media Partner akan menghubungi PIC maksimal 3x24 jam setelah pendaftaran.",
-              "Aset promosi dan panduan logo akan dikirim setelah proses kurasi selesai.",
-              "Pastikan email dan nomor WhatsApp yang didaftarkan aktif.",
-              "Benefit media partner diberikan sesuai kategori yang diperoleh."
-            ],
-            pendaftar: []
-        };
-
-        const ApiService = {
-            // Mengirim data form pendaftaran ke Google Spreadsheet menggunakan POST
-            submitForm: async (formData) => {
-                // Mencari kategori berdasarkan followers
-                const followers = parseInt(formData.followers) || 0;
-                let kategori = "Bronze";
-                for (const kb of MOCK_DB.masterKategoriBenefit) {
-                    if (followers >= kb.min && followers <= kb.max) {
-                        kategori = kb.kategori;
-                        break;
-                    }
+    const ApiService = {
+        // Mengirim data form pendaftaran ke Google Spreadsheet menggunakan POST
+        submitForm: async (formData) => {
+            // Mencari kategori berdasarkan followers
+            const followers = parseInt(formData.followers) || 0;
+            let kategori = "Bronze";
+            for (const kb of MOCK_DB.masterKategoriBenefit) {
+                if (followers >= kb.min && followers <= kb.max) {
+                    kategori = kb.kategori;
+                    break;
                 }
+            }
 
-                // Struktur data yang dikirim sesuai requirement
-                const payload = {
-                    "action": "submitForm",
-                    "NamaMedia": formData.namaMedia,
-                    "JenisMedia": formData.jenisMedia,
-                    "NamaPIC": formData.pic,
-                    "Email": formData.email,
-                    "CP (Nomor WA)": formData.wa,
-                    "JumlahFollowers": followers.toString(),
-                    "LinkMediaSosial": formData.url,
-                    "BuktiMedia": formData.bukti || "", // base64 / URL
-                    "Kategori": kategori,
-                    "StatusPengajuan": "Pending"
-                };
-
-                console.log("Data pendaftaran yang akan dikirim (POST):", payload);
-
-                try {
-                    const response = await fetch(API_URL, {
-                        method: 'POST',
-                        mode: 'no-cors', // Penting untuk bypass CORS Google Web App Redirect
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(payload)
-                    });
-
-                    console.log("Response mentah dari API POST:", response);
-                    
-                    // Memasukkan sementara ke mock lokal agar sinkron instan saat di-preview
-                    MOCK_DB.pendaftar.unshift({
-                        id: (MOCK_DB.pendaftar.length + 1).toString(),
-                        namaMedia: formData.namaMedia,
-                        jenisMedia: formData.jenisMedia,
-                        pic: formData.pic,
-                        email:formData.email,
-                        wa: formData.wa,
-                        followers: followers,
-                        url: formData.url,
-                        bukti: formData.bukti || "Screenshot_Uploaded_File",
-                        kategori: kategori,
-                        status: "Pending",
-                        tanggal: new Date().toISOString()
-                    });
-
-                    return { success: true, message: "Pengajuan media partner berhasil dikirim." };
-                } catch (error) {
-                    console.error("Gagal melakukan registrasi API POST:", error);
-                    throw new Error("Gagal mengirim pengajuan. Silakan coba kembali.");
-                }
-            },
-
-            // Mengambil semua data pendaftar dari Google Sheets
-            getAdminData: async () => {
-                try {
-                    // Mengakses langsung API_URL tanpa query action sesuai instruksi
-                    const response = await fetch(API_URL);
-                    if (!response.ok) throw new Error("Gagal mengambil data pendaftar.");
-                    const data = await response.json();
-                    console.log("Data pendaftar berhasil ditarik dari API:", data);
-                    
-                    // Memetakan struktur data sheets ke struktur state React
-                    const normalized = data.map((item, idx) => ({
-                        id: item.id || (idx + 1).toString(),
-                        namaMedia: item.NamaMedia || item.namaMedia || "-",
-                        jenisMedia: item.JenisMedia || item.jenisMedia || "-",
-                        pic: item.NamaPIC || item.pic || "-",
-                        email: item.Email || item.email || "-",
-                        wa: item["CP (Nomor WA)"] || item.wa || "-",
-                        followers: parseInt(item.JumlahFollowers || item.followers || 0),
-                        url: item.LinkMediaSosial || item.url || "",
-                        bukti: item.BuktiMedia || item.bukti || "",
-                        kategori: item.Kategori || item.kategori || "Bronze",
-                        status: item.StatusPengajuan || item.status || "Pending",
-                        catatanAdmin: item.CatatanAdmin || "",
-                        tanggal:
-                            item.Timestamp ||
-                            item.tanggal ||
-                            item.Tanggal ||
-                            new Date().toISOString()
-                    }));
-                    
-                    // Update mock local agar konsisten
-                    MOCK_DB.pendaftar = normalized;
-                    return normalized;
-                } catch (error) {
-                    console.error("Gagal terhubung ke API getAdminData. Menggunakan data cadangan lokal:", error);
-                    return MOCK_DB.pendaftar;
-                }
-            },
-
-            // Mengupdate status pengajuan pendaftar di Google Sheets
-            updateStatus: async (id, newStatus) => {
-                const payload = {
-                    action: "updateStatus",
-                    id: id,
-                    status: newStatus
-                };
-                console.log("Mengirim perubahan status ke API (POST):", payload);
-
-                try {
-                    await fetch(API_URL, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(payload)
-                    });
-                    
-                    const index = MOCK_DB.pendaftar.findIndex(p => p.id === id);
-                    if (index > -1) {
-                        MOCK_DB.pendaftar[index].status = newStatus;
-                    }
-                    return true;
-                } catch (error) {
-                    console.error("Gagal mengupdate status di API:", error);
-                    return false;
-                }
-            },
-
-            updateNote: async (id, note) => {
-
-                const payload = {
-                    action: "updateCatatan",
-                    id: id,
-                    catatan: note
-                };
-            
-                try {
-            
-                    await fetch(API_URL,{
-                        method:'POST',
-                        mode:'no-cors',
-                        headers:{
-                            'Content-Type':'application/json'
-                        },
-                        body: JSON.stringify(payload)
-                    });
-            
-                    return true;
-            
-                } catch(error){
-            
-                    return false;
-                }
-            },
-        };
-
-        const { useState, useEffect, useMemo } = React;
-
-        const IconCheck = () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>;
-        const IconX = () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>;
-        const IconChevronDown = () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>;
-        const IconChevronUp = () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" /></svg>;
-        const IconSearch = () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>;
-        const IconUpload = () => <svg className="w-8 h-8 text-unfest-green mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>;
-        const IconLoader = () => <svg className="w-6 h-6 animate-spin text-unfest-yellow" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>;
-
-        // ==========================================
-        // COMPONENT Toast Notification
-        // ==========================================
-        const Toast = ({ message, type, onClose }) => {
-            useEffect(() => {
-                const timer = setTimeout(onClose, 4500);
-                return () => clearTimeout(timer);
-            }, [onClose]);
-
-            const bgClass = type === 'error' ? 'bg-unfest-red text-unfest-cream border-unfest-yellow' : 'bg-unfest-green text-unfest-yellow border-unfest-yellow';
-            return (
-                <div className={`fixed bottom-5 right-5 z-50 px-6 py-4 rounded-xl border-3 shadow-xl flex items-center gap-3 animate-bounce ${bgClass}`}>
-                    {type === 'error' ? <IconX /> : <IconCheck />}
-                    <p className="font-display font-bold text-sm tracking-wide">{message}</p>
-                    <button onClick={onClose} className="ml-4 hover:opacity-75"><IconX /></button>
-                </div>
-            );
-        };
-
-        // ==========================================
-        // COMPONENT Navbar
-        // ==========================================
-        const Navbar = ({ onViewChange, currentView }) => {
-        const [secretClick, setSecretClick] = useState(0);
-            
-            const handleSecretAdmin = () => {
-                const count = secretClick + 1;
-            
-                 if (count >= 5) {
-                    const password = prompt("Masukkan Kode Admin");
-        
-                    if (password === "cacamaricaee") {
-                        onViewChange('admin');
-                    } else {
-                        alert("Kode Admin Salah!");
-                    }
-        
-                    setSecretClick(0);
-                    return;
-                }
-        
-                setSecretClick(count);
-            
-                setTimeout(() => {
-                    setSecretClick(0);
-                }, 3000);
+            // Struktur data yang dikirim sesuai requirement
+            const payload = {
+                "action": "submitForm",
+                "NamaMedia": formData.namaMedia,
+                "JenisMedia": formData.jenisMedia,
+                "NamaPIC": formData.pic,
+                "Email": formData.email,
+                "CP (Nomor WA)": formData.wa,
+                "JumlahFollowers": followers.toString(),
+                "LinkMediaSosial": formData.url,
+                "BuktiMedia": formData.bukti || "", // base64 / URL
+                "Kategori": kategori,
+                "StatusPengajuan": "Pending"
             };
 
-            return(
-            <nav className="sticky top-0 w-full z-40 bg-unfest-green border-b-6 border-unfest-yellow py-3 shadow-lg">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-                    <div
-                        className="flex items-center gap-3 cursor-pointer"
-                        onClick={() => {
-                            onViewChange('landing');
-                            handleSecretAdmin();
-                        }}
-                    >
-                        <div className="rounded-lg overflow-hidden">
-                            <img
-                                src="logounfest.png"
-                                alt="Logo Media Partner"
-                                className="w-12 h-12 object-contain"
-                            />
-                        </div>
-                        <div>
-                            <span className="font-display font-black text-2xl tracking-tighter text-unfest-yellow block uppercase leading-none">
-                                UNFEST<span className="text-unfest-yellow">10</span>
-                            </span>
-                            <span className="text-[10px] text-unfest-yellow tracking-widest font-mono font-bold block uppercase leading-none mt-1">
-                                MEDIA PARTNER
-                            </span>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                            <button
-                                onClick={() => onViewChange('status')}
-                                className="text-xs font-display font-bold uppercase tracking-wider text-unfest-cream hover:text-unfest-yellow border-2 border-transparent hover:border-unfest-yellow px-3 py-1.5 rounded-lg transition-all"
-                            >
-                                Cek Status
-                            </button>
-                        
-                        {currentView === 'admin' && (
-                            <button 
-                                onClick={() => onViewChange('landing')} 
-                                className="text-xs font-display font-bold uppercase tracking-wider text-unfest-cream hover:text-unfest-yellow border-2 border-transparent hover:border-unfest-yellow px-3 py-1.5 rounded-lg transition-all"
-                            >
-                                Lihat Website
-                            </button>
-                        )}
-                        <button 
-                            onClick={() => onViewChange('form')}
-                            className="text-xs font-display font-black uppercase tracking-wider px-4 py-2 rounded bg-unfest-yellow text-unfest-charcoal border-2 border-unfest-charcoal shadow-md hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
-                        >
-                            Daftar Medpart
-                        </button>
-                    </div>
-                </div>
-            </nav>
-            );
-        };
+            console.log("Data pendaftaran yang akan dikirim (POST):", payload);
 
-        // ==========================================
-        // COMPONENT Landing Page
-        // ==========================================
-        const LandingPage = ({ onNavigate, config }) => {
-            const [openFaq, setOpenFaq] = useState(null);
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Penting untuk bypass CORS Google Web App Redirect
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
 
-            return (
-                <div className="flex-grow">
-                  <section className="bg-unfest-green py-0">
-                    <div className="w-full">
-                            <img
-                                src="./perayaan unfest.png"
-                                alt="Perayaan 10 Tahun UNFEST"
-                                className="w-full h-auto"
-                            />
-                        </div>
-                    </section>
-
-                    
-                    <section className="py-20 px-4 bg-unfest-cream">
-                        <div className="max-w-4xl mx-auto text-center">
-                    
-                            <span className="inline-block py-2 px-5 bg-unfest-red text-unfest-yellow rounded-lg mb-6 font-bold uppercase text-xs tracking-widest">
-                                Terbuka Untuk Umum
-                            </span>
-                    
-                            <h1 className="font-serif font-black text-5xl text-unfest-green mb-4">
-                                OPEN MEDIA PARTNER
-                            </h1>
-                    
-                            <p className="text-xl text-unfest-red font-display mb-8">
-                                Perayaan 10 Tahun UNFEST
-                            </p>
-                    
-                            <p className="max-w-2xl mx-auto text-unfest-charcoal leading-relaxed mb-8">
-                                Mari bersama-sama menggemakan kemeriahan Perayaan 10 Tahun UNFEST.
-                                Daftarkan media publikasi Anda dan jadilah bagian dari kolaborasi
-                                promosi dalam perjalanan UNFEST.
-                            </p>
-                    
-                            <button
-                                onClick={() => onNavigate('form')}
-                                className="javanese-btn-gold text-base font-display font-black uppercase px-8 py-4 rounded-xl tracking-wider"
-                            >
-                                Daftar Sekarang ➔
-                            </button>
-                    
-                        </div>
-                    </section>
-
-                    <section className="py-16 bg-unfest-cream border-t-6 border-unfest-yellow">
-                        <div className="max-w-3xl mx-auto px-4">
-                            <div className="text-center mb-12">
-                                <h2 className="font-serif font-black text-3xl sm:text-4xl text-unfest-charcoal uppercase tracking-tight mt-2">
-                                    INFO PENTING PENDAFTARAN
-                                </h2>
-                            </div>
-
-                            <div className="space-y-4">
-                                {config.informasiPenting.map((info, index) => (
-                                  <div
-                                    key={index}
-                                    className="bg-unfest-cream rounded-xl p-4 border-l-4 border-unfest-yellow"
-                                  >
-                                    <div className="flex items-start gap-3">
-                                      <div className="bg-unfest-yellow text-unfest-charcoal rounded-full p-1">
-                                        <IconCheck />
-                                      </div>
-                                
-                                      <p className="font-semibold text-unfest-green">
-                                        {info}
-                                      </p>
-                                    </div>
-                                  </div>
-                                ))}
-                               </div> 
-                            
-                        </div>
-                    </section>
-                    <section className="py-8 bg-unfest-cream">
-                        <div className="max-w-3xl mx-auto px-4">
-                    
-                            <div className="bg-unfest-green border-2 border-unfest-yellow rounded-xl p-5">
-                    
-                                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                                    <div>
-                                        <p className="text-unfest-yellow font-display font-black uppercase tracking-wider text-sm">
-                                            ✦ Butuh Bantuan?
-                                        </p>
-                    
-                                        <p className="text-unfest-cream text-sm mt-1">
-                                            Hubungi Media Partner Officer UNFEST 10
-                                        </p>
-                    
-                                        <p className="text-xl font-black text-unfest-yellow mt-2">
-                                            Caca
-                                        </p>
-                    
-                                        <p className="text-unfest-cream text-sm">
-                                            +62 85373470850
-                                        </p>
-                                    </div>
-                    
-                                    <a
-                                        href="https://wa.me/6285373470850"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="
-                                            bg-unfest-yellow
-                                            text-unfest-green
-                                            font-black
-                                            px-6
-                                            py-3
-                                            rounded-lg
-                                            hover:scale-105
-                                            transition
-                                            whitespace-nowrap
-                                        "
-                                    >
-                                        Chat WhatsApp →
-                                    </a>
-                    
-                                </div>
-                    
-                            </div>
-                    
-                        </div>
-                    </section>
-            );
-        };
-
-        // ==========================================
-        // COMPONENT Registration Form
-        // ==========================================
-        const RegistrationForm = ({ config, onSubmitSuccess, showToast }) => {
-            const [formData, setFormData] = useState({
-                namaMedia: '',
-                jenisMedia: '',
-                pic: '',
-                email: '',
-                wa: '',
-                followers: '',
-                url: '',
-                bukti: null
-            });
-            const [fileName, setFileName] = useState('');
-            const [isSubmitting, setIsSubmitting] = useState(false);
-            const [calculatedCategory, setCalculatedCategory] = useState(null);
-            const [agreeBenefit, setAgreeBenefit] = useState(false);
-
-            useEffect(() => {
-                if (formData.followers && config?.kategoriBenefit) {
-                    const count = parseInt(formData.followers);
-                    const found = config.kategoriBenefit.find(c => count >= c.min && count <= c.max);
-                    setCalculatedCategory(found || null);
-                } else {
-                    setCalculatedCategory(null);
-                }
-            }, [formData.followers, config]);
-
-            const handleChange = (e) => {
-                const { name, value } = e.target;
-                if (name === 'wa' && !/^[0-9]*$/.test(value)) return;
-                if (name === 'followers' && !/^[0-9]*$/.test(value)) return;
-                setFormData(prev => ({ ...prev, [name]: value }));
-            };
-
-            const handleFileChange = (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
-
-                if (file.size > 10 * 1024 * 1024) {
-                    showToast('Batas maksimal ukuran berkas adalah 10MB!', 'error');
-                    e.target.value = '';
-                    return;
-                }
-
-                const allowedFormats = ['image/jpeg', 'image/png', 'application/pdf'];
-                if (!allowedFormats.includes(file.type)) {
-                    showToast('Format berkas tidak valid! Harap gunakan JPG, PNG, atau PDF.', 'error');
-                    e.target.value = '';
-                    return;
-                }
-
-                setFileName(file.name);
+                console.log("Response mentah dari API POST:", response);
                 
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    setFormData(prev => ({ ...prev, bukti: reader.result }));
-                };
-                reader.readAsDataURL(file);
+                // Memasukkan sementara ke mock lokal agar sinkron instan saat di-preview
+                MOCK_DB.pendaftar.unshift({
+                    id: (MOCK_DB.pendaftar.length + 1).toString(),
+                    namaMedia: formData.namaMedia,
+                    jenisMedia: formData.jenisMedia,
+                    pic: formData.pic,
+                    email:formData.email,
+                    wa: formData.wa,
+                    followers: followers,
+                    url: formData.url,
+                    bukti: formData.bukti || "Screenshot_Uploaded_File",
+                    kategori: kategori,
+                    status: "Pending",
+                    tanggal: new Date().toISOString()
+                });
+
+                return { success: true, message: "Pengajuan media partner berhasil dikirim." };
+            } catch (error) {
+                console.error("Gagal melakukan registrasi API POST:", error);
+                throw new Error("Gagal mengirim pengajuan. Silakan coba kembali.");
+            }
+        },
+
+        // Mengambil semua data pendaftar dari Google Sheets
+        getAdminData: async () => {
+            try {
+                // Mengakses langsung API_URL tanpa query action sesuai instruksi
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error("Gagal mengambil data pendaftar.");
+                const data = await response.json();
+                console.log("Data pendaftar berhasil ditarik dari API:", data);
+                
+                // Memetakan struktur data sheets ke struktur state React
+                const normalized = data.map((item, idx) => ({
+                    id: item.id || (idx + 1).toString(),
+                    namaMedia: item.NamaMedia || item.namaMedia || "-",
+                    jenisMedia: item.JenisMedia || item.jenisMedia || "-",
+                    pic: item.NamaPIC || item.pic || "-",
+                    email: item.Email || item.email || "-",
+                    wa: item["CP (Nomor WA)"] || item.wa || "-",
+                    followers: parseInt(item.JumlahFollowers || item.followers || 0),
+                    url: item.LinkMediaSosial || item.url || "",
+                    bukti: item.BuktiMedia || item.bukti || "",
+                    kategori: item.Kategori || item.kategori || "Bronze",
+                    status: item.StatusPengajuan || item.status || "Pending",
+                    catatanAdmin: item.CatatanAdmin || "",
+                    tanggal:
+                        item.Timestamp ||
+                        item.tanggal ||
+                        item.Tanggal ||
+                        new Date().toISOString()
+                }));
+                
+                // Update mock local agar konsisten
+                MOCK_DB.pendaftar = normalized;
+                return normalized;
+            } catch (error) {
+                console.error("Gagal terhubung ke API getAdminData. Menggunakan data cadangan lokal:", error);
+                return MOCK_DB.pendaftar;
+            }
+        },
+
+        // Mengupdate status pengajuan pendaftar di Google Sheets
+        updateStatus: async (id, newStatus) => {
+            const payload = {
+                action: "updateStatus",
+                id: id,
+                status: newStatus
             };
+            console.log("Mengirim perubahan status ke API (POST):", payload);
 
-            const handleSubmit = async (e) => {
-                e.preventDefault();
-
-                if (formData.wa.length < 9 || formData.wa.length > 15) {
-                    showToast('Nomor WhatsApp tidak valid (harus 9-15 digit angka)!', 'error');
-                    return;
+            try {
+                await fetch(API_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                const index = MOCK_DB.pendaftar.findIndex(p => p.id === id);
+                if (index > -1) {
+                    MOCK_DB.pendaftar[index].status = newStatus;
                 }
+                return true;
+            } catch (error) {
+                console.error("Gagal mengupdate status di API:", error);
+                return false;
+            }
+        },
 
-                try {
-                    new URL(formData.url.startsWith('http') ? formData.url : `https://${formData.url}`);
-                } catch (_) {
-                    showToast('Harap masukkan tautan media sosial yang valid!', 'error');
-                    return;
-                }
+        updateNote: async (id, note) => {
 
-                if (!formData.bukti) {
-                    showToast('Harap unggah bukti analitik media Anda!', 'error');
-                    return;
-                }
-
-                setIsSubmitting(true);
-                try {
-                    // Eksekusi API POST
-                    const res = await ApiService.submitForm(formData);
-                    
-                    console.log("Submit Form Berhasil. Response dari API:", res);
-                    showToast("Pengajuan media partner berhasil dikirim.", "success");
-                    
-                    // Reset fields formulir
-                    setFormData({
-                        namaMedia: '',
-                        jenisMedia: '',
-                        pic: '',
-                        email: '',
-                        wa: '',
-                        followers: '',
-                        url: '',
-                        bukti: null
-                    });
-                    setFileName('');
-                    setCalculatedCategory(null);
-                    
-                    onSubmitSuccess();
-                } catch (error) {
-                    console.error("Submit Form Gagal. Pesan error:", error);
-                    showToast("Gagal mengirim pengajuan. Silakan coba kembali.", "error");
-                } finally {
-                    setIsSubmitting(false);
-                }
+            const payload = {
+                action: "updateCatatan",
+                id: id,
+                catatan: note
             };
+        
+            try {
+        
+                await fetch(API_URL,{
+                    method:'POST',
+                    mode:'no-cors',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+        
+                return true;
+        
+            } catch(error){
+        
+                return false;
+            }
+        },
+    };
 
-            return (
-                <div className="pt-10 pb-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex-grow">
-                    <div className="text-center mb-10">
-                        <span className="inline-block bg-unfest-green text-unfest-yellow px-6 py-3 rounded-xl border-2 border-unfest-yellow font-display font-black text-lg sm:text-xl uppercase tracking-widest shadow-md mb-4">
-                            ✦ PENDAFTARAN MITRA ✦
-                        </span>
-                       <h2 className="font-serif font-black text-3xl sm:text-5xl text-unfest-green uppercase mb-3">
-                            Form Registrasi Media Partner
-                        </h2>
-                        
-                        <p className="text-unfest-green/80 max-w-xl mx-auto">
-                            Isi data dengan benar. Benefit akan diberikan sesuai kategori media.
-                        </p>
-                    </div>
+    const { useState, useEffect, useMemo } = React;
 
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                        <div className="lg:col-span-8 poster-frame-cream rounded-2xl p-6 sm:p-8">
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                    <div>
-                                        <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
-                                            Nama Media Publikasi *
-                                        </label>
-                                        <input 
-                                            type="text" 
-                                            name="namaMedia" 
-                                            required 
-                                            value={formData.namaMedia} 
-                                            onChange={handleChange}
-                                            className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-medium focus:outline-none focus:ring-2 focus:ring-unfest-yellow"
-                                            placeholder="Cth: Suara Jogja Gigs" 
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
-                                            Jenis Media Publikasi *
-                                        </label>
-                                        <div className="relative">
-                                            <select 
-                                                name="jenisMedia" 
-                                                required 
-                                                value={formData.jenisMedia} 
-                                                onChange={handleChange}
-                                                className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-medium appearance-none focus:outline-none focus:ring-2 focus:ring-unfest-yellow"
-                                            >
-                                                <option value="" disabled>Pilih Jenis</option>
-                                                {config?.jenisMedia.map(j => <option key={j} value={j}>{j}</option>)}
-                                            </select>
-                                            <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-unfest-green">
-                                                <IconChevronDown />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+    const IconCheck = () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>;
+    const IconX = () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>;
+    const IconChevronDown = () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>;
+    const IconChevronUp = () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" /></svg>;
+    const IconSearch = () => <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>;
+    const IconUpload = () => <svg className="w-8 h-8 text-unfest-green mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>;
+    const IconLoader = () => <svg className="w-6 h-6 animate-spin text-unfest-yellow" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>;
 
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                    <div>
-                                        <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
-                                            Nama Lengkap PIC (Penanggung Jawab) *
-                                        </label>
-                                        <input 
-                                            type="text" 
-                                            name="pic" 
-                                            required 
-                                            value={formData.pic} 
-                                            onChange={handleChange}
-                                            className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-medium focus:outline-none focus:ring-2 focus:ring-unfest-yellow"
-                                            placeholder="Nama Lengkap sesuai KTP" 
-                                        />
-                                    </div>
-                                    <div>
-                                      <label className="block text-sm font-bold mb-2">
-                                        Email
-                                      </label>
-                                    
-                                      <input
-                                        type="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3"
-                                        placeholder="contoh@email.com"
-                                        required
-                                    />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
-                                            Kontak WhatsApp Aktif (Indonesia) *
-                                        </label>
-                                        <input 
-                                            type="text" 
-                                            name="wa" 
-                                            required 
-                                            value={formData.wa} 
-                                            onChange={handleChange}
-                                            className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-medium focus:outline-none"
-                                            placeholder="Cth: 08123456789" 
-                                        />
-                                    </div>
-                                </div>
+    // ==========================================
+    // COMPONENT Toast Notification
+    // ==========================================
+    const Toast = ({ message, type, onClose }) => {
+        useEffect(() => {
+            const timer = setTimeout(onClose, 4500);
+            return () => clearTimeout(timer);
+        }, [onClose]);
 
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                    <div>
-                                        <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
-                                            Jumlah Pengikut / Followers Utama *
-                                        </label>
-                                        <input 
-                                            type="text" 
-                                            name="followers" 
-                                            required 
-                                            value={formData.followers} 
-                                            onChange={handleChange}
-                                            className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-mono font-bold text-lg focus:outline-none"
-                                            placeholder="Cth: 15400" 
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
-                                            Tautan Utama Profil Media / Website *
-                                        </label>
-                                        <input 
-                                            type="text" 
-                                            name="url" 
-                                            required 
-                                            value={formData.url} 
-                                            onChange={handleChange}
-                                            className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-medium focus:outline-none"
-                                            placeholder="Cth: instagram.com/gamelangigs" 
-                                        />
-                                    </div>
-                                </div>
+        const bgClass = type === 'error' ? 'bg-unfest-red text-unfest-cream border-unfest-yellow' : 'bg-unfest-green text-unfest-yellow border-unfest-yellow';
+        return (
+            <div className={`fixed bottom-5 right-5 z-50 px-6 py-4 rounded-xl border-3 shadow-xl flex items-center gap-3 animate-bounce ${bgClass}`}>
+                {type === 'error' ? <IconX /> : <IconCheck />}
+                <p className="font-display font-bold text-sm tracking-wide">{message}</p>
+                <button onClick={onClose} className="ml-4 hover:opacity-75"><IconX /></button>
+            </div>
+        );
+    };
 
-                                <div>
-                                    <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
-                                        Unggah Berkas Bukti Analitik *
-                                    </label>
-                                    <div className="relative border-3 border-dashed border-unfest-green hover:border-unfest-red rounded-xl p-6 text-center transition-all bg-unfest-creamDark/20 cursor-pointer">
-                                        <input 
-                                            type="file" 
-                                            required 
-                                            accept=".jpg,.jpeg,.png,.pdf" 
-                                            onChange={handleFileChange}
-                                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" 
-                                        />
-                                        <div className="flex flex-col items-center pointer-events-none">
-                                            <IconUpload />
-                                            <p className="text-sm text-unfest-green font-display font-bold">
-                                                {fileName ? <span className="text-unfest-red">{fileName}</span> : 'Ketuk atau Seret Berkas Di Sini'}
-                                            </p>
-                                            <p className="text-[11px] text-unfest-charcoal/65 mt-1">Maksimal Ukuran Berkas: 10MB. Format: JPG, PNG, PDF</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="bg-unfest-creamDark/30 border-2 border-unfest-green rounded-xl p-4">
-                                    <label className="flex items-start gap-3 cursor-pointer">
-                                        <input
-                                            type="checkbox"
-                                            checked={agreeBenefit}
-                                            onChange={(e) => setAgreeBenefit(e.target.checked)}
-                                            className="mt-1 w-5 h-5"
-                                        />
-                                
-                                        <span className="text-sm text-unfest-green font-medium">
-                                            Saya telah membaca, memahami, dan menyetujui kategori benefit
-                                            Media Partner UNFEST 10 yang diberikan berdasarkan media yang didaftarkan.
-                                        </span>
-                                    </label>
-                                </div>
-                                
-                                <button 
-                                    type="submit" 
-                                    disabled={isSubmitting || !agreeBenefit}
-                                    className="w-full flex items-center justify-center py-4 bg-unfest-red text-unfest-cream border-3 border-unfest-charcoal font-display font-black uppercase text-base tracking-widest rounded-xl shadow-[4px_4px_0px_0px_#ffd300] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                                >
-                                    {isSubmitting ? (
-                                        <div className="flex items-center gap-3">
-                                            <IconLoader />
-                                            <span>Sedang Mengirim ke Google Sheet...</span>
-                                        </div>
-                                    ) : (
-                                        'Kirim Berkas Pendaftaran ➔'
-                                    )}
-                                </button>
-                            </form>
-                        </div>
-
-                        <div className="lg:col-span-4">
-                            <div className="sticky top-24">
-                                <div className="text-center mb-4">
-                                    <h3 className="font-serif font-black text-lg text-unfest-cream uppercase flex items-center justify-center gap-2">
-                                        <span>Preview Benefit</span>
-                                    </h3>
-                                </div>
-                                
-                                {calculatedCategory ? (
-                                    <div className="poster-frame-red p-6 rounded-2xl relative overflow-hidden animate-pulse">
-                                        
-                                        <span className="text-[10px] font-mono font-bold tracking-widest text-unfest-yellow uppercase block mb-1">
-                                            ESTIMASI KATEGORI
-                                        </span>
-                                        <h4 className="font-serif font-black text-3xl text-unfest-yellow tracking-wide mb-1 uppercase">
-                                            {calculatedCategory.kategori}
-                                        </h4>
-                                        <p className="text-[11px] text-unfest-cream/80 font-mono mb-4">
-                                            Berdasarkan {parseInt(formData.followers).toLocaleString()} Followers
-                                        </p>
-                                        
-                                        <div className="h-0.5 bg-unfest-yellow/20 mb-4"></div>
-
-                                        <div className="space-y-3 relative z-10 text-unfest-cream">
-                                            <p className="text-xs font-display font-black uppercase tracking-wider text-unfest-yellow">
-                                                Daftar Keuntungan Mitra:
-                                            </p>
-                                            <ul className="space-y-2">
-                                                {calculatedCategory.benefit.split('\n').map((b, i) => (
-                                                    <li key={i} className="flex items-start text-xs font-semibold">
-                                                        <span className="text-unfest-yellow mr-2">•</span>
-                                                        <span>{b}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div className="poster-frame-cream p-6 rounded-2xl border-dashed text-center">
-                                        <p className="text-sm font-semibold text-unfest-green/70">
-                                            Silakan isi jumlah followers/pengikut untuk melihat pratinjau kalkulasi benefit otomatis dari Spreadsheet.
-                                        </p>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
+    // ==========================================
+    // COMPONENT Navbar
+    // ==========================================
+    const Navbar = ({ onViewChange, currentView }) => {
+    const [secretClick, setSecretClick] = useState(0);
+        
+        const handleSecretAdmin = () => {
+            const count = secretClick + 1;
+        
+             if (count >= 5) {
+                const password = prompt("Masukkan Kode Admin");
+    
+                if (password === "cacamaricaee") {
+                    onViewChange('admin');
+                } else {
+                    alert("Kode Admin Salah!");
+                }
+    
+                setSecretClick(0);
+                return;
+            }
+    
+            setSecretClick(count);
+        
+            setTimeout(() => {
+                setSecretClick(0);
+            }, 3000);
         };
 
-
-        const StatusCheckPage = () => {
-            const [keyword, setKeyword] = React.useState('');
-            const [result, setResult] = React.useState(null);
-
-            const handleSearch = async () => {
-                try {
-                    const response = await fetch(API_URL);
-                    const data = await response.json();
-
-                    const found = data.find(item =>
-                        (item.NamaMedia || '').toLowerCase().includes(keyword.toLowerCase())
-                    );
-
-                    setResult(found || false);
-
-                } catch (err) {
-                    console.error(err);
-                }
-            };
-
-            return (
-                <div className="pt-20 pb-20 px-4 max-w-3xl mx-auto">
-
-                    <h2 className="text-3xl font-serif font-black text-center text-unfest-green mb-6">
-                        CEK STATUS PENDAFTARAN
-                    </h2>
-
-                    <div className="flex gap-3 mb-6">
-                        <input
-                            type="text"
-                            placeholder="Masukkan Nama Media"
-                            value={keyword}
-                            onChange={(e)=>setKeyword(e.target.value)}
-                            className="flex-1 border-2 border-unfest-green rounded-lg px-4 py-3"
+        return(
+        <nav className="sticky top-0 w-full z-40 bg-unfest-green border-b-6 border-unfest-yellow py-3 shadow-lg">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+                <div
+                    className="flex items-center gap-3 cursor-pointer"
+                    onClick={() => {
+                        onViewChange('landing');
+                        handleSecretAdmin();
+                    }}
+                >
+                    <div className="rounded-lg overflow-hidden">
+                        <img
+                            src="logounfest.png"
+                            alt="Logo Media Partner"
+                            className="w-12 h-12 object-contain"
                         />
-
-                        <button
-                            onClick={handleSearch}
-                            className="bg-unfest-green text-white px-6 rounded-lg"
-                        >
-                            Cari
-                        </button>
                     </div>
-        
-                    {result && (
-                        <div className="poster-frame-cream p-6 rounded-xl">
-        
-                            <h3 className="font-bold text-xl mb-4">
-                                {result.NamaMedia}
-                            </h3>
-        
-                            <p>
-                                Status :
-                                <strong> {result.StatusPengajuan}</strong>
-                            </p>
-        
-                            <p>
-                                Kategori :
-                                <strong> {result.Kategori}</strong>
-                            </p>
-        
-                            <p>
-                                Catatan Admin :
-                                <strong>
-                                    {result.CatatanAdmin || '-'}
-                                </strong>
-                            </p>
-        
-                        </div>
-                    )}
-        
-                    {result === false && (
-                        <div className="text-center text-red-500">
-                            Data tidak ditemukan
-                        </div>
-                    )}
-        
+                    <div>
+                        <span className="font-display font-black text-2xl tracking-tighter text-unfest-yellow block uppercase leading-none">
+                            UNFEST<span className="text-unfest-yellow">10</span>
+                        </span>
+                        <span className="text-[10px] text-unfest-yellow tracking-widest font-mono font-bold block uppercase leading-none mt-1">
+                            MEDIA PARTNER
+                        </span>
+                    </div>
                 </div>
-            );
-        };
-        
-        // ==========================================
-        // COMPONENT Success View
-        // ==========================================
-        const SuccessView = ({ onNavigate }) => (
-            <div className="pt-20 pb-20 px-4 flex justify-center items-center flex-grow">
-                <div className="poster-frame-cream p-8 md:p-12 rounded-3xl max-w-xl w-full text-center relative overflow-hidden">
-                    <div className="w-20 h-20 bg-unfest-green text-unfest-yellow border-3 border-unfest-charcoal rounded-full flex items-center justify-center mx-auto mb-6 shadow-md">
-                        <IconCheck />
-                    </div>
-
-                    <h2 className="font-serif font-black text-3xl sm:text-4xl text-unfest-green uppercase tracking-wide mb-4">
-                        Pendaftaran Terkirim!
-                    </h2>
+                <div className="flex items-center gap-4">
+                        <button
+                            onClick={() => onViewChange('status')}
+                            className="text-xs font-display font-bold uppercase tracking-wider text-unfest-cream hover:text-unfest-yellow border-2 border-transparent hover:border-unfest-yellow px-3 py-1.5 rounded-lg transition-all"
+                        >
+                            Cek Status
+                        </button>
                     
-                    <div className="h-0.5 bg-unfest-green/20 mb-6 max-w-xs mx-auto"></div>
-
-                    <p className="text-unfest-charcoal/80 font-semibold leading-relaxed mb-8">
-                        Terima kasih telah mendaftar sebagai Media Partner UNFEST 10. Data formulir Anda berhasil direkam di Google Spreadsheet utama kami. Tim panitia akan segera memverifikasi berkas Anda.
-                    </p>
-
+                    {currentView === 'admin' && (
+                        <button 
+                            onClick={() => onViewChange('landing')} 
+                            className="text-xs font-display font-bold uppercase tracking-wider text-unfest-cream hover:text-unfest-yellow border-2 border-transparent hover:border-unfest-yellow px-3 py-1.5 rounded-lg transition-all"
+                        >
+                            Lihat Website
+                        </button>
+                    )}
                     <button 
-                        onClick={() => onNavigate('landing')} 
-                        className="javanese-btn-gold py-4 px-8 rounded-xl font-display font-black text-sm uppercase tracking-widest w-full"
+                        onClick={() => onViewChange('form')}
+                        className="text-xs font-display font-black uppercase tracking-wider px-4 py-2 rounded bg-unfest-yellow text-unfest-charcoal border-2 border-unfest-charcoal shadow-md hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
                     >
-                        Kembali Ke Beranda
+                        Daftar Medpart
                     </button>
                 </div>
             </div>
+        </nav>
         );
+    };
 
-        // ==========================================
-        // COMPONENT Admin Dashboard
-        // ==========================================
-        const AdminDashboard = ({ showToast }) => {
-            const [isLoggedIn, setIsLoggedIn] = useState(false);
-            const [password, setPassword] = useState('');
-            const [data, setData] = useState([]);
-            const [loading, setLoading] = useState(true);
-            const [searchTerm, setSearchTerm] = useState('');
-            const [filterStatus, setFilterStatus] = useState('All');
-            const [filterCategory, setFilterCategory] = useState('All');
-            const [filterMedia, setFilterMedia] = useState('All');
-            const [selectedData, setSelectedData] = useState(null);
-            const [catatanAdmin, setCatatanAdmin] = useState('');
-            const [showScriptGuide, setShowScriptGuide] = useState(false);
-            const [searchStatus, setSearchStatus] = useState('');
-            const [statusResult, setStatusResult] = useState(null);
+    // ==========================================
+    // COMPONENT Landing Page
+    // ==========================================
+    const LandingPage = ({ onNavigate, config }) => {
+        const [openFaq, setOpenFaq] = useState(null);
 
-            useEffect(() => {
-                if (isLoggedIn) {
-                    loadData();
-                    // Set up refresh interval otomatis setiap 60 detik sesuai requirement
-                    const interval = setInterval(() => {
-                        console.log("Auto-refreshing dashboard data dari Google Sheet...");
-                        loadData(false); // background refresh tanpa full blocking loading
-                    }, 60000);
-                    return () => clearInterval(interval);
-                }
-            }, [isLoggedIn]);
-
-            const loadData = async (showBlockingLoader = true) => {
-                if (showBlockingLoader) setLoading(true);
-                try {
-                    const result = await ApiService.getAdminData();
-                    setData(result.sort((a,b) => new Date(b.tanggal) - new Date(a.tanggal)));
-                } catch (error) {
-                    showToast('Gagal menyelaraskan data dengan spreadsheet API.', 'error');
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            const handleLogin = (e) => {
-                e.preventDefault();
-                if (password === 'cacamaricaee') {
-                    setIsLoggedIn(true);
-                    showToast('Akses masuk admin berhasil disetujui!', 'success');
-                } else {
-                    showToast('Kata sandi salah!', 'error');
-                }
-            };
-
-            const handleUpdateStatus = async (id, newStatus) => {
-                try {
-                    // Update state lokal terlebih dahulu (Optimistic UI)
-                    setData(prev => prev.map(item => item.id === id ? { ...item, status: newStatus } : item));
-                    
-                    const success = await ApiService.updateStatus(id, newStatus);
-                    if (success) {
-                        showToast(`Status pengajuan berhasil diubah menjadi ${newStatus}`, 'success');
-                        if (selectedData && selectedData.id === id) {
-                            setSelectedData({...selectedData, status: newStatus});
-                        }
-                    } else {
-                        showToast('Penyimpanan status ke spreadsheet ditolak.', 'error');
-                        loadData();
-                    }
-                } catch (error) {
-                    showToast('Gagal mengubah status pendaftar.', 'error');
-                    loadData();
-                }
-            };
-
-            const handleSaveNote = async (id) => {
-
-                const success = await ApiService.updateNote(
-                    id,
-                    catatanAdmin
-                );
-            
-                if(success){
-            
-                    setData(prev =>
-                        prev.map(item =>
-                            item.id === id
-                            ? {
-                                ...item,
-                                catatanAdmin: catatanAdmin
-                            }
-                            : item
-                        )
-                    );
-            
-                    showToast(
-                        "Catatan berhasil disimpan",
-                        "success"
-                    );
-            
-                } else {
-            
-                    showToast(
-                        "Gagal menyimpan catatan",
-                        "error"
-                    );
-            
-                }
-            };
-            
-            const handleCheckStatus = () => {
-
-              const result = data.find(item => {
-
-                return (
-                  item.namaMedia?.toLowerCase() === searchStatus.toLowerCase()
-                  ||
-                  item.wa?.includes(searchStatus)
-                );
-
-              });
-
-              setStatusResult(result || null);
-            };
-            
-            const handleExportCSV = () => {
-                const headers = ['Tanggal', 'Nama Media', 'Jenis', 'PIC', 'Nomor WA', 'Followers', 'Kategori', 'Tautan Media', 'Status'];
-                const csvData = data.map(row => [
-                    new Date(row.tanggal).toLocaleDateString('id-ID'),
-                    `"${row.namaMedia}"`, row.jenisMedia, `"${row.pic}"`, `'${row.wa}`, row.followers, row.kategori, row.url, row.status
-                ].join(','));
-                
-                const csvContent = "data:text/csv;charset=utf-8," + headers.join(',') + "\n" + csvData;
-                const encodedUri = encodeURI(csvContent);
-                const link = document.createElement("a");
-                link.setAttribute("href", encodedUri);
-                link.setAttribute("download", `Data_Pendaftar_Medpart_UNFEST_${new Date().getTime()}.csv`);
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            };
-
-            const stats = useMemo(() => {
-                const totalFollowers = data.reduce((acc, curr) => acc + (curr.followers || 0), 0);
-                return {
-                    total: data.length,
-                    followers: totalFollowers,
-                    pending: data.filter(d => d.status === 'Pending').length,
-                    diproses: data.filter(d => d.status === 'Diproses').length,
-                    diterima: data.filter(d => d.status === 'Diterima').length,
-                    ditolak: data.filter(d => d.status === 'Ditolak').length,
-                    bronze: data.filter(d => d.kategori === 'Bronze').length,
-                    silver: data.filter(d => d.kategori === 'Silver').length,
-                    gold: data.filter(d => d.kategori === 'Gold').length,
-                    platinum: data.filter(d => d.kategori === 'Platinum').length,
-                };
-            }, [data]);
-
-            const filteredData = data.filter(item => {
-                const matchesSearch = item.namaMedia.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                                      item.pic.toLowerCase().includes(searchTerm.toLowerCase());
-                const matchesStatus = filterStatus === 'All' || item.status === filterStatus;
-                const matchesCategory = filterCategory === 'All' || item.kategori === filterCategory;
-                const matchesMedia = filterMedia === 'All' || item.jenisMedia === filterMedia;
-                return matchesSearch && matchesStatus && matchesCategory && matchesMedia;
-            });
-
-            if (!isLoggedIn) {
-                return (
-                    <div className="pt-20 pb-20 px-4 flex justify-center items-center flex-grow">
-                        <div className="poster-frame-cream p-8 rounded-2xl max-w-md w-full relative">
-                            <h2 className="font-serif font-black text-2xl text-center text-unfest-green uppercase mb-6">
-                                PANEL LOGIN ADMIN
-                            </h2>
-                            <form onSubmit={handleLogin} className="space-y-4">
-                                <div>
-                                    <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wide mb-1">
-                                        Masukkan Kata Sandi Pengawas
-                                    </label>
-                                    <input 
-                                        type="password" 
-                                        value={password} 
-                                        onChange={e => setPassword(e.target.value)} 
-                                        required
-                                        className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal focus:outline-none" 
-                                    />
-                                </div>
-                                <button type="submit" className="w-full py-3 javanese-btn-gold font-display font-black uppercase text-sm">
-                                    Akses Dasbor Admin
-                                </button>
-                            </form>
-                        </div>
+        return (
+            <div className="flex-grow">
+              <section className="bg-unfest-green py-0">
+                <div className="w-full">
+                        <img
+                            src="./perayaan unfest.png"
+                            alt="Perayaan 10 Tahun UNFEST"
+                            className="w-full h-auto"
+                        />
                     </div>
-                );
+                </section>
+
+                
+                <section className="py-20 px-4 bg-unfest-cream">
+                    <div className="max-w-4xl mx-auto text-center">
+                
+                        <span className="inline-block py-2 px-5 bg-unfest-red text-unfest-yellow rounded-lg mb-6 font-bold uppercase text-xs tracking-widest">
+                            Terbuka Untuk Umum
+                        </span>
+                
+                        <h1 className="font-serif font-black text-5xl text-unfest-green mb-4">
+                            OPEN MEDIA PARTNER
+                        </h1>
+                
+                        <p className="text-xl text-unfest-red font-display mb-8">
+                            Perayaan 10 Tahun UNFEST
+                        </p>
+                
+                        <p className="max-w-2xl mx-auto text-unfest-charcoal leading-relaxed mb-8">
+                            Mari bersama-sama menggemakan kemeriahan Perayaan 10 Tahun UNFEST.
+                            Daftarkan media publikasi Anda dan jadilah bagian dari kolaborasi
+                            promosi dalam perjalanan UNFEST.
+                        </p>
+                
+                        <button
+                            onClick={() => onNavigate('form')}
+                            className="javanese-btn-gold text-base font-display font-black uppercase px-8 py-4 rounded-xl tracking-wider"
+                        >
+                            Daftar Sekarang ➔
+                        </button>
+                
+                    </div>
+                </section>
+
+                <section className="py-16 bg-unfest-cream border-t-6 border-unfest-yellow">
+                    <div className="max-w-3xl mx-auto px-4">
+                        <div className="text-center mb-12">
+                            <h2 className="font-serif font-black text-3xl sm:text-4xl text-unfest-charcoal uppercase tracking-tight mt-2">
+                                INFO PENTING PENDAFTARAN
+                            </h2>
+                        </div>
+
+                        <div className="space-y-4">
+                            {config.informasiPenting.map((info, index) => (
+                              <div
+                                key={index}
+                                className="bg-unfest-cream rounded-xl p-4 border-l-4 border-unfest-yellow"
+                              >
+                                <div className="flex items-start gap-3">
+                                  <div className="bg-unfest-yellow text-unfest-charcoal rounded-full p-1">
+                                    <IconCheck />
+                                  </div>
+                            
+                                  <p className="font-semibold text-unfest-green">
+                                    {info}
+                                  </p>
+                                </div>
+                              </div>
+                            ))}
+                           </div> 
+                        
+                    </div>
+                </section>
+                <section className="py-12 bg-unfest-green">
+                    <div className="max-w-3xl mx-auto px-4">
+                
+                        <div className="bg-unfest-yellow/10 border-2 border-unfest-yellow rounded-xl p-6 text-center">
+                
+                            <h3 className="font-display font-black text-unfest-yellow uppercase tracking-wider mb-3">
+                                ✦ Butuh Bantuan?
+                            </h3>
+                
+                            <p className="text-unfest-cream mb-2">
+                                Hubungi Media Partner Officer UNFEST 10
+                            </p>
+                
+                            <p className="font-bold text-xl text-unfest-yellow">
+                                Caca
+                            </p>
+                
+                            <a
+                                href="https://wa.me/6285373470850"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-block mt-4 bg-unfest-yellow text-unfest-charcoal font-bold px-5 py-3 rounded-lg"
+                            >
+                                Chat WhatsApp →
+                            </a>
+                
+                        </div>
+                
+                    </div>
+                </section>
+                
+            </div>
+        );
+    };
+
+    // ==========================================
+    // COMPONENT Registration Form
+    // ==========================================
+    const RegistrationForm = ({ config, onSubmitSuccess, showToast }) => {
+        const [formData, setFormData] = useState({
+            namaMedia: '',
+            jenisMedia: '',
+            pic: '',
+            email: '',
+            wa: '',
+            followers: '',
+            url: '',
+            bukti: null
+        });
+        const [fileName, setFileName] = useState('');
+        const [isSubmitting, setIsSubmitting] = useState(false);
+        const [calculatedCategory, setCalculatedCategory] = useState(null);
+        const [agreeBenefit, setAgreeBenefit] = useState(false);
+
+        useEffect(() => {
+            if (formData.followers && config?.kategoriBenefit) {
+                const count = parseInt(formData.followers);
+                const found = config.kategoriBenefit.find(c => count >= c.min && count <= c.max);
+                setCalculatedCategory(found || null);
+            } else {
+                setCalculatedCategory(null);
+            }
+        }, [formData.followers, config]);
+
+        const handleChange = (e) => {
+            const { name, value } = e.target;
+            if (name === 'wa' && !/^[0-9]*$/.test(value)) return;
+            if (name === 'followers' && !/^[0-9]*$/.test(value)) return;
+            setFormData(prev => ({ ...prev, [name]: value }));
+        };
+
+        const handleFileChange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (file.size > 10 * 1024 * 1024) {
+                showToast('Batas maksimal ukuran berkas adalah 10MB!', 'error');
+                e.target.value = '';
+                return;
             }
 
-            return (
-                <div className="pt-8 pb-20 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto flex-grow flex flex-col">
+            const allowedFormats = ['image/jpeg', 'image/png', 'application/pdf'];
+            if (!allowedFormats.includes(file.type)) {
+                showToast('Format berkas tidak valid! Harap gunakan JPG, PNG, atau PDF.', 'error');
+                e.target.value = '';
+                return;
+            }
+
+            setFileName(file.name);
+            
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setFormData(prev => ({ ...prev, bukti: reader.result }));
+            };
+            reader.readAsDataURL(file);
+        };
+
+        const handleSubmit = async (e) => {
+            e.preventDefault();
+
+            if (formData.wa.length < 9 || formData.wa.length > 15) {
+                showToast('Nomor WhatsApp tidak valid (harus 9-15 digit angka)!', 'error');
+                return;
+            }
+
+            try {
+                new URL(formData.url.startsWith('http') ? formData.url : `https://${formData.url}`);
+            } catch (_) {
+                showToast('Harap masukkan tautan media sosial yang valid!', 'error');
+                return;
+            }
+
+            if (!formData.bukti) {
+                showToast('Harap unggah bukti analitik media Anda!', 'error');
+                return;
+            }
+
+            setIsSubmitting(true);
+            try {
+                // Eksekusi API POST
+                const res = await ApiService.submitForm(formData);
+                
+                console.log("Submit Form Berhasil. Response dari API:", res);
+                showToast("Pengajuan media partner berhasil dikirim.", "success");
+                
+                // Reset fields formulir
+                setFormData({
+                    namaMedia: '',
+                    jenisMedia: '',
+                    pic: '',
+                    email: '',
+                    wa: '',
+                    followers: '',
+                    url: '',
+                    bukti: null
+                });
+                setFileName('');
+                setCalculatedCategory(null);
+                
+                onSubmitSuccess();
+            } catch (error) {
+                console.error("Submit Form Gagal. Pesan error:", error);
+                showToast("Gagal mengirim pengajuan. Silakan coba kembali.", "error");
+            } finally {
+                setIsSubmitting(false);
+            }
+        };
+
+        return (
+            <div className="pt-10 pb-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex-grow">
+                <div className="text-center mb-10">
+                    <span className="inline-block bg-unfest-green text-unfest-yellow px-6 py-3 rounded-xl border-2 border-unfest-yellow font-display font-black text-lg sm:text-xl uppercase tracking-widest shadow-md mb-4">
+                        ✦ PENDAFTARAN MITRA ✦
+                    </span>
+                   <h2 className="font-serif font-black text-3xl sm:text-5xl text-unfest-green uppercase mb-3">
+                        Form Registrasi Media Partner
+                    </h2>
                     
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-                        <div>
-                            <h2 className="font-serif font-black text-3xl text-unfest-cream uppercase">
-                                Dasbor Manajemen Panitia
-                            </h2>
-                            <p className="text-unfest-cream/70 text-sm">
-                                Verifikasi, kurasi, dan tinjau berkas registrasi dari Google Sheets.
-                            </p>
-                        </div>
-                        <div className="flex flex-wrap gap-3">
-                            <button 
-                                onClick={() => loadData(true)} 
-                                className="px-4 py-2.5 bg-unfest-green text-unfest-cream border-2 border-unfest-yellow hover:bg-unfest-yellow hover:text-unfest-charcoal rounded-lg text-xs font-display font-bold uppercase flex items-center gap-2 transition-all"
-                            >
-                                <IconLoader />
-                                <span>Refresh Data</span>
-                            </button>
-                            <button 
-                                onClick={() => setShowScriptGuide(true)} 
-                                className="px-4 py-2.5 bg-unfest-green text-unfest-cream border-2 border-unfest-yellow hover:bg-unfest-yellow hover:text-unfest-charcoal rounded-lg text-xs font-display font-bold uppercase transition-all"
-                            >
-                                Setup Integrasi G-Sheets
-                            </button>
-                            <button 
-                                onClick={handleExportCSV} 
-                                className="px-4 py-2.5 javanese-btn-gold text-xs font-display font-black uppercase"
-                            >
-                                Ekspor Berkas CSV
-                            </button>
-                        </div>
-                    </div>
+                    <p className="text-unfest-green/80 max-w-xl mx-auto">
+                        Isi data dengan benar. Benefit akan diberikan sesuai kategori media.
+                    </p>
+                </div>
 
-                    {/* Stats Panels Grid */}
-                    <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-4 mb-8">
-                        {[
-                            { label: 'Total Media', value: stats.total, color: 'text-unfest-cream' },
-                            { label: 'Pending', value: stats.pending, color: 'text-unfest-yellow' },
-                            { label: 'Diproses', value: stats.diproses, color: 'text-orange-400' },
-                            { label: 'Diterima', value: stats.diterima, color: 'text-green-400' },
-                            { label: 'Ditolak', value: stats.ditolak, color: 'text-unfest-red' },
-                            { label: 'Bronze', value: stats.bronze, color: 'text-orange-300' },
-                            { label: 'Silver', value: stats.silver, color: 'text-slate-300' },
-                            { label: 'Gold', value: stats.gold, color: 'text-yellow-300' },
-                            { label: 'Platinum', value: stats.platinum, color: 'text-cyan-300' }
-                        ].map((stat, i) => (
-                            <div key={i} className="poster-frame-green p-4 rounded-xl text-center relative overflow-hidden flex flex-col justify-center">
-                                <p className="text-[10px] text-unfest-cream/70 uppercase font-mono tracking-wider mb-1 leading-tight">{stat.label}</p>
-                                <p className={`text-xl font-display font-black ${stat.color} leading-none mt-1`}>{stat.value}</p>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Filters & Data Table */}
-                    <div className="poster-frame-cream rounded-2xl flex-grow flex flex-col overflow-hidden">
-                        
-                        <div className="p-4 border-b-2 border-unfest-green flex flex-col lg:flex-row gap-4 justify-between bg-unfest-creamDark/10">
-                            
-                            <div className="relative w-full lg:w-96">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-unfest-green">
-                                    <IconSearch />
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <div className="lg:col-span-8 poster-frame-cream rounded-2xl p-6 sm:p-8">
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
+                                        Nama Media Publikasi *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        name="namaMedia" 
+                                        required 
+                                        value={formData.namaMedia} 
+                                        onChange={handleChange}
+                                        className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-medium focus:outline-none focus:ring-2 focus:ring-unfest-yellow"
+                                        placeholder="Cth: Suara Jogja Gigs" 
+                                    />
                                 </div>
-                                <input 
-                                    type="text" 
-                                    placeholder="Cari nama media atau nama PIC..." 
-                                    value={searchTerm} 
-                                    onChange={e => setSearchTerm(e.target.value)}
-                                    className="w-full pl-10 pr-4 py-2 border-2 border-unfest-green bg-white rounded-lg text-sm font-medium focus:outline-none" 
+                                <div>
+                                    <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
+                                        Jenis Media Publikasi *
+                                    </label>
+                                    <div className="relative">
+                                        <select 
+                                            name="jenisMedia" 
+                                            required 
+                                            value={formData.jenisMedia} 
+                                            onChange={handleChange}
+                                            className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-medium appearance-none focus:outline-none focus:ring-2 focus:ring-unfest-yellow"
+                                        >
+                                            <option value="" disabled>Pilih Jenis</option>
+                                            {config?.jenisMedia.map(j => <option key={j} value={j}>{j}</option>)}
+                                        </select>
+                                        <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-unfest-green">
+                                            <IconChevronDown />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
+                                        Nama Lengkap PIC (Penanggung Jawab) *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        name="pic" 
+                                        required 
+                                        value={formData.pic} 
+                                        onChange={handleChange}
+                                        className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-medium focus:outline-none focus:ring-2 focus:ring-unfest-yellow"
+                                        placeholder="Nama Lengkap sesuai KTP" 
+                                    />
+                                </div>
+                                <div>
+                                  <label className="block text-sm font-bold mb-2">
+                                    Email
+                                  </label>
+                                
+                                  <input
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3"
+                                    placeholder="contoh@email.com"
+                                    required
                                 />
-                            </div>
-
-                            <div className="flex flex-wrap gap-2">
-                                <select 
-                                    value={filterMedia}
-                                    onChange={e => setFilterMedia(e.target.value)}
-                                    className="px-3 py-2 border-2 border-unfest-green bg-white rounded-lg text-xs font-bold text-unfest-green"
-                                >
-                                    <option value="All">Semua Jenis Media</option>
-                                    {MOCK_DB.masterJenisMedia.map(m => <option key={m} value={m}>{m}</option>)}
-                                </select>
-
-                                <select 
-                                    value={filterCategory}
-                                    onChange={e => setFilterCategory(e.target.value)}
-                                    className="px-3 py-2 border-2 border-unfest-green bg-white rounded-lg text-xs font-bold text-unfest-green"
-                                >
-                                    <option value="All">Semua Kategori</option>
-                                    <option value="Bronze">Bronze</option>
-                                    <option value="Silver">Silver</option>
-                                    <option value="Gold">Gold</option>
-                                    <option value="Platinum">Platinum</option>
-                                </select>
-
-                                <div className="flex border-2 border-unfest-green rounded-lg overflow-hidden">
-                                    {['All', 'Pending', 'Diproses', 'Diterima', 'Ditolak'].map(status => (
-                                        <button 
-                                            key={status} 
-                                            onClick={() => setFilterStatus(status)}
-                                            className={`px-3 py-1.5 text-xs font-bold transition-all ${filterStatus === status ? 'bg-unfest-green text-unfest-cream' : 'bg-white text-unfest-green hover:bg-unfest-creamDark/20'}`}
-                                        >
-                                            {status}
-                                        </button>
-                                    ))}
                                 </div>
-                            </div>
-                        </div>
-
-                        <div className="overflow-x-auto flex-grow">
-                            <table className="w-full text-left text-sm whitespace-nowrap">
-                                <thead className="bg-unfest-green text-unfest-cream">
-                                    <tr>
-                                        <th className="px-6 py-4 font-display font-black uppercase text-xs tracking-wider">Media Publikasi</th>
-                                        <th className="px-6 py-4 font-display font-black uppercase text-xs tracking-wider">PIC & Kontak</th>
-                                        <th className="px-6 py-4 font-display font-black uppercase text-xs tracking-wider">Kategori (Sistem)</th>
-                                        <th className="px-6 py-4 font-display font-black uppercase text-xs tracking-wider">Status Pengajuan</th>
-                                        <th className="px-6 py-4 font-display font-black uppercase text-xs tracking-wider text-right">Tindakan</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y-2 divide-unfest-green/20">
-                                    {loading ? (
-                                        <tr>
-                                            <td colSpan="5" className="px-6 py-12 text-center text-unfest-green">
-                                                <div className="flex justify-center mb-2"><IconLoader /></div>
-                                                <span className="font-display font-bold">Menghubungkan & menyelaraskan data dengan Google Sheet...</span>
-                                            </td>
-                                        </tr>
-                                    ) : filteredData.length === 0 ? (
-                                        <tr>
-                                            <td colSpan="5" className="px-6 py-12 text-center text-unfest-green font-display font-bold">
-                                                Tidak ditemukan data pendaftar yang sesuai kriteria.
-                                            </td>
-                                        </tr>
-                                    ) : (
-                                        filteredData.map((row) => (
-                                            <tr key={row.id} className="hover:bg-unfest-creamDark/10 transition-colors">
-                                                <td className="px-6 py-4">
-                                                    <div className="font-display font-black text-unfest-green uppercase">{row.namaMedia}</div>
-                                                    <div className="text-xs font-mono font-bold text-unfest-charcoal/70">{row.jenisMedia}</div>
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <div className="font-semibold text-unfest-charcoal">{row.pic}</div>
-                                                    <div className="text-xs font-mono font-bold text-unfest-red">{row.wa}</div>
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <span className="inline-block px-2 py-1 rounded bg-unfest-green text-unfest-yellow text-xs font-mono font-bold">
-                                                        {row.kategori} ({row.followers.toLocaleString('id-ID')})
-                                                    </span>
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <span className={`inline-block px-3 py-1 rounded text-xs font-display font-black uppercase ${
-                                                        row.status === 'Pending' ? 'bg-unfest-yellow text-unfest-charcoal' :
-                                                        row.status === 'Diproses' ? 'bg-orange-500 text-white' :
-                                                        row.status === 'Diterima' ? 'bg-green-600 text-white' :
-                                                        'bg-unfest-red text-unfest-cream'
-                                                    }`}>
-                                                        {row.status}
-                                                    </span>
-                                                </td>
-                                                <td className="px-6 py-4 text-right">
-                                                    <button
-                                                        onClick={() => {
-                                                            setSelectedData(row);
-                                                            setCatatanAdmin(row.catatanAdmin || '');
-                                                        }}
-                                                        className="px-3 py-1.5 bg-unfest-green text-unfest-cream hover:bg-unfest-yellow hover:text-unfest-charcoal border border-unfest-charcoal rounded text-xs font-display font-bold uppercase transition-all"
-                                                    >
-                                                        Lihat Detail
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    {/* Detail Modal Overlay */}
-                    {selectedData && (
-                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-unfest-charcoal/80 backdrop-blur-sm">
-                            <div className="bg-unfest-cream border-4 border-unfest-green rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
-                                <div className="p-6 border-b-2 border-unfest-green flex justify-between items-center bg-unfest-green text-unfest-cream">
-                                    <h3 className="font-serif font-black text-xl uppercase tracking-wide">
-                                        Lembar Berkas Pendaftar
-                                    </h3>
-                                    <button onClick={() => setSelectedData(null)} className="text-unfest-cream hover:text-unfest-yellow">
-                                        <IconX />
-                                    </button>
-                                </div>
-                                <div className="p-6 space-y-6">
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                        <div>
-                                            <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-1">Nama Media</p>
-                                            <p className="font-display font-black text-lg text-unfest-charcoal uppercase">{selectedData.namaMedia}</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-1">Kategori (Sistem)</p>
-                                            <p className="font-display font-black text-lg text-unfest-red uppercase">{selectedData.kategori}</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-1">Penanggung Jawab (PIC)</p>
-                                            <p className="font-bold text-unfest-charcoal">{selectedData.pic}</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-1">Kontak WhatsApp</p>
-                                            <a href={`https://wa.me/${selectedData.wa}`} target="_blank" className="font-mono font-bold text-unfest-red hover:underline block">
-                                                {selectedData.wa} ➔
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-1">Jumlah Pengikut</p>
-                                            <p className="font-mono font-bold text-lg text-unfest-charcoal">{selectedData.followers.toLocaleString('id-ID')}</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-1">Platform Tautan</p>
-                                            {selectedData.url ? (
-                                                <a href={selectedData.url.startsWith('http') ? selectedData.url : `https://${selectedData.url}`} target="_blank" className="inline-block px-3 py-1.5 bg-unfest-green text-unfest-cream border border-unfest-green rounded text-xs font-display font-bold uppercase transition-all hover:bg-unfest-yellow hover:text-unfest-green mt-1">
-                                                    Lihat Media ➔
-                                                </a>
-                                            ) : (
-                                                <span className="text-xs text-unfest-charcoal/50">-</span>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    {/* Bukti Screenshots preview */}
-                                    <div className="p-4 border-2 border-unfest-green rounded-xl bg-unfest-creamDark/15">
-                                        <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-2">Unggahan Berkas Bukti</p>
-                                        {selectedData.bukti && selectedData.bukti.startsWith('data:') ? (
-                                            <img src={selectedData.bukti} alt="Bukti Analitik" className="max-h-64 rounded-lg border-2 border-unfest-green mx-auto object-contain bg-white" />
-                                        ) : selectedData.bukti && selectedData.bukti.startsWith('http') ? (
-                                            <div className="text-center py-4">
-                                                <a href={selectedData.bukti} target="_blank" className="inline-block px-4 py-2 bg-unfest-red text-unfest-cream border-2 border-unfest-charcoal rounded-lg text-xs font-display font-black uppercase shadow-[3px_3px_0px_#ffd300]">
-                                                    Lihat Bukti ➔
-                                                </a>
-                                            </div>
-                                        ) : (
-                                            <div className="py-6 text-center text-xs font-mono text-unfest-green/75">
-                                                Tidak ada berkas fisik yang diunggah / Menggunakan Mockup URL ({selectedData.bukti || "kosong"})
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    <div className="border-t-2 border-unfest-green/25 pt-6">
-
-                                        <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-2">
-                                            Catatan Admin
-                                        </p>
-                                    
-                                        <textarea
-                                            value={catatanAdmin}
-                                            onChange={(e)=>setCatatanAdmin(e.target.value)}
-                                            rows="4"
-                                            className="w-full border-2 border-unfest-green rounded-lg p-3"
-                                            placeholder="Tulis catatan untuk media partner..."
-                                        />
-                                    
-                                        <button
-                                            onClick={() => handleSaveNote(selectedData.id)}
-                                            className="mt-3 px-4 py-2 bg-unfest-green text-white rounded-lg"
-                                        >
-                                            Simpan Catatan
-                                        </button>
-                                    
-                                    </div>
-
-                                    {/* Action buttons to update database state */}
-                                    <div className="border-t-2 border-unfest-green/25 pt-6 text-center">
-                                        <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-3">Tentukan Keputusan Status</p>
-                                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                                            <button 
-                                                onClick={() => handleUpdateStatus(selectedData.id, 'Diterima')} 
-                                                className={`py-2.5 rounded-lg font-display font-black text-xs uppercase tracking-wider border-2 border-unfest-charcoal transition-all ${selectedData.status === 'Diterima' ? 'bg-green-600 text-white' : 'bg-white text-green-600'}`}
-                                            >
-                                                Terima
-                                            </button>
-                                            <button 
-                                                onClick={() => handleUpdateStatus(selectedData.id, 'Diproses')} 
-                                                className={`py-2.5 rounded-lg font-display font-black text-xs uppercase tracking-wider border-2 border-unfest-charcoal transition-all ${selectedData.status === 'Diproses' ? 'bg-orange-500 text-white' : 'bg-white text-orange-500'}`}
-                                            >
-                                                Diproses
-                                            </button>
-                                            <button 
-                                                onClick={() => handleUpdateStatus(selectedData.id, 'Ditolak')} 
-                                                className={`py-2.5 rounded-lg font-display font-black text-xs uppercase tracking-wider border-2 border-unfest-charcoal transition-all ${selectedData.status === 'Ditolak' ? 'bg-unfest-red text-unfest-cream' : 'bg-white text-unfest-red'}`}
-                                            >
-                                                Tolak
-                                            </button>
-                                            <button 
-                                                onClick={() => handleUpdateStatus(selectedData.id, 'Pending')} 
-                                                className={`py-2.5 rounded-lg font-display font-black text-xs uppercase tracking-wider border-2 border-unfest-charcoal transition-all ${selectedData.status === 'Pending' ? 'bg-unfest-yellow text-unfest-charcoal' : 'bg-white text-unfest-charcoal'}`}
-                                            >
-                                                Pending
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* Google App Script Guide Modal */}
-                    {showScriptGuide && (
-                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-unfest-charcoal/85 backdrop-blur-sm">
-                            <div className="bg-unfest-cream border-4 border-unfest-green rounded-2xl w-full max-w-4xl h-[85vh] flex flex-col shadow-2xl">
-                                <div className="p-4 border-b-2 border-unfest-green flex justify-between items-center bg-unfest-green text-unfest-cream">
-                                    <div>
-                                        <h3 className="font-serif font-black text-lg uppercase">Integrasi Sinkronisasi Google Sheets</h3>
-                                        <p className="text-xs text-unfest-yellow mt-0.5">Panduan integrasi Google Sheets & Google Drive menggunakan Google Apps Script.</p>
-                                    </div>
-                                    <button onClick={() => setShowScriptGuide(false)} className="text-unfest-cream hover:text-unfest-yellow">
-                                        <IconX />
-                                    </button>
-                                </div>
-                                <div className="flex-grow p-0 overflow-hidden flex flex-col">
-                                    <div className="p-4 bg-unfest-creamDark/20 text-xs font-semibold overflow-y-auto border-b border-unfest-green">
-                                        <ol className="list-decimal pl-5 space-y-2 text-unfest-charcoal">
-                                            <li>Buat Spreadsheet baru di Google Drive Anda.</li>
-                                            <li>Buat nama lembaran Sheet sebagai berikut: <strong className="text-unfest-red">Data Pendaftaran</strong>, <strong className="text-unfest-red">Master Jenis Media</strong>, <strong className="text-unfest-red">Master Kategori Benefit</strong>, <strong className="text-unfest-red">FAQ</strong>.</li>
-                                            <li>Buka menu <strong className="text-unfest-green">Extensions &gt; Apps Script</strong>. Hapus template bawaan, lalu tempelkan kode di bawah ini.</li>
-                                            <li>Klik <strong className="text-unfest-green">Deploy &gt; New Deployment</strong>, pilih tipe <strong className="text-unfest-green">Web App</strong> dengan aksesibilitas <strong className="text-unfest-green">Anyone</strong>.</li>
-                                            <li>Salin URL Web App hasil deploy dan tautkan pada variable URL Fetch API website ini.</li>
-                                        </ol>
-                                    </div>
-                                    <textarea 
-                                        readOnly 
-                                        className="flex-grow w-full bg-unfest-charcoal text-green-400 p-4 font-mono text-xs resize-none focus:outline-none" 
-                                        defaultValue={`
-// =======================================================
-// GOOGLE APPS SCRIPT: SINKRONISASI DATABASE SPREADSHEET
-// =======================================================
-
-const SPREADSHEET_ID = 'GANTI_DENGAN_ID_SPREADSHEET_ANDA';
-const DRIVE_FOLDER_ID = 'GANTI_DENGAN_ID_FOLDER_DRIVE_ANDA'; // Folder untuk file bukti pendaftaran
-
-function doGet(e) {
-  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  
-  const dataSheet = ss.getSheetByName('Data Pendaftaran');
-  const data = dataSheet.getDataRange().getValues().slice(1);
-  const result = data.map((r, i) => ({
-    id: (i + 2).toString(),
-    NamaMedia: r[0], JenisMedia: r[1], NamaPIC: r[2], "CP (Nomor WA)": r[3],
-    JumlahFollowers: Number(r[4]), LinkMediaSosial: r[5], BuktiMedia: r[6], Kategori: r[7], StatusPengajuan: r[8], tanggal: r[9]
-  }));
-  return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
-}
-
-function doPost(e) {
-  const data = JSON.parse(e.postData.contents);
-  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  
-  if (data.action === 'submitForm') {
-    const followers = Number(data.JumlahFollowers);
-    
-    // Konfigurasi kategori benefit fallback statis di sisi Apps Script
-    let kategori = "Bronze";
-    if (followers >= 0 && followers <= 4999) kategori = "Bronze";
-    else if (followers >= 5000 && followers <= 29999) kategori = "Silver";
-    else if (followers >= 30000 && followers <= 79999) kategori = "Gold";
-    else if (followers >= 80000) kategori = "Platinum";
-    
-    // Unggah tangkapan layar / bukti ke Google Drive
-    let fileUrl = "";
-    if (data.BuktiMedia && data.BuktiMedia.startsWith('data:')) {
-      try {
-        const folder = DriveApp.getFolderById(DRIVE_FOLDER_ID);
-        const base64Data = data.BuktiMedia.split(',')[1];
-        const mimeType = data.BuktiMedia.match(/data:([a-zA-Z0-9]+\\/[a-zA-Z0-9-.+]+).*,.*/)[1];
-        const blob = Utilities.newBlob(Utilities.base64Decode(base64Data), mimeType, data.NamaMedia + "_BuktiAnalitik");
-        const file = folder.createFile(blob);
-        file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
-        fileUrl = file.getUrl();
-      } catch(err) {
-        fileUrl = "Gagal Upload: " + err.toString();
-      }
-    } else {
-      fileUrl = data.BuktiMedia;
-    }
-    
-    // Simpan baris pendaftar baru ke lembar 'Data Pendaftaran'
-    const sheet = ss.getSheetByName('Data Pendaftaran');
-    sheet.appendRow([
-      data.NamaMedia, data.JenisMedia, data.NamaPIC, data["CP (Nomor WA)"], 
-      followers, data.LinkMediaSosial, fileUrl, kategori, "Pending", new Date().toISOString()
-    ]);
-    
-    return ContentService.createTextOutput(JSON.stringify({success: true})).setMimeType(ContentService.MimeType.JSON);
-  }
-  
-  if (data.action === 'updateStatus') {
-    const sheet = ss.getSheetByName('Data Pendaftaran');
-    sheet.getRange(Number(data.id), 9).setValue(data.status); 
-    return ContentService.createTextOutput(JSON.stringify({success: true})).setMimeType(ContentService.MimeType.JSON);
-  }
-}
-                                    `} 
+                                <div>
+                                    <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
+                                        Kontak WhatsApp Aktif (Indonesia) *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        name="wa" 
+                                        required 
+                                        value={formData.wa} 
+                                        onChange={handleChange}
+                                        className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-medium focus:outline-none"
+                                        placeholder="Cth: 08123456789" 
                                     />
                                 </div>
                             </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
+                                        Jumlah Pengikut / Followers Utama *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        name="followers" 
+                                        required 
+                                        value={formData.followers} 
+                                        onChange={handleChange}
+                                        className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-mono font-bold text-lg focus:outline-none"
+                                        placeholder="Cth: 15400" 
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
+                                        Tautan Utama Profil Media / Website *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        name="url" 
+                                        required 
+                                        value={formData.url} 
+                                        onChange={handleChange}
+                                        className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-medium focus:outline-none"
+                                        placeholder="Cth: instagram.com/gamelangigs" 
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
+                                    Unggah Berkas Bukti Analitik *
+                                </label>
+                                <div className="relative border-3 border-dashed border-unfest-green hover:border-unfest-red rounded-xl p-6 text-center transition-all bg-unfest-creamDark/20 cursor-pointer">
+                                    <input 
+                                        type="file" 
+                                        required 
+                                        accept=".jpg,.jpeg,.png,.pdf" 
+                                        onChange={handleFileChange}
+                                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" 
+                                    />
+                                    <div className="flex flex-col items-center pointer-events-none">
+                                        <IconUpload />
+                                        <p className="text-sm text-unfest-green font-display font-bold">
+                                            {fileName ? <span className="text-unfest-red">{fileName}</span> : 'Ketuk atau Seret Berkas Di Sini'}
+                                        </p>
+                                        <p className="text-[11px] text-unfest-charcoal/65 mt-1">Maksimal Ukuran Berkas: 10MB. Format: JPG, PNG, PDF</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="bg-unfest-creamDark/30 border-2 border-unfest-green rounded-xl p-4">
+                                <label className="flex items-start gap-3 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        checked={agreeBenefit}
+                                        onChange={(e) => setAgreeBenefit(e.target.checked)}
+                                        className="mt-1 w-5 h-5"
+                                    />
+                            
+                                    <span className="text-sm text-unfest-green font-medium">
+                                        Saya telah membaca, memahami, dan menyetujui kategori benefit
+                                        Media Partner UNFEST 10 yang diberikan berdasarkan media yang didaftarkan.
+                                    </span>
+                                </label>
+                            </div>
+                            
+                            <button 
+                                type="submit" 
+                                disabled={isSubmitting || !agreeBenefit}
+                                className="w-full flex items-center justify-center py-4 bg-unfest-red text-unfest-cream border-3 border-unfest-charcoal font-display font-black uppercase text-base tracking-widest rounded-xl shadow-[4px_4px_0px_0px_#ffd300] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {isSubmitting ? (
+                                    <div className="flex items-center gap-3">
+                                        <IconLoader />
+                                        <span>Sedang Mengirim ke Google Sheet...</span>
+                                    </div>
+                                ) : (
+                                    'Kirim Berkas Pendaftaran ➔'
+                                )}
+                            </button>
+                        </form>
+                    </div>
+
+                    <div className="lg:col-span-4">
+                        <div className="sticky top-24">
+                            <div className="text-center mb-4">
+                                <h3 className="font-serif font-black text-lg text-unfest-cream uppercase flex items-center justify-center gap-2">
+                                    <span>Preview Benefit</span>
+                                </h3>
+                            </div>
+                            
+                            {calculatedCategory ? (
+                                <div className="poster-frame-red p-6 rounded-2xl relative overflow-hidden animate-pulse">
+                                    
+                                    <span className="text-[10px] font-mono font-bold tracking-widest text-unfest-yellow uppercase block mb-1">
+                                        ESTIMASI KATEGORI
+                                    </span>
+                                    <h4 className="font-serif font-black text-3xl text-unfest-yellow tracking-wide mb-1 uppercase">
+                                        {calculatedCategory.kategori}
+                                    </h4>
+                                    <p className="text-[11px] text-unfest-cream/80 font-mono mb-4">
+                                        Berdasarkan {parseInt(formData.followers).toLocaleString()} Followers
+                                    </p>
+                                    
+                                    <div className="h-0.5 bg-unfest-yellow/20 mb-4"></div>
+
+                                    <div className="space-y-3 relative z-10 text-unfest-cream">
+                                        <p className="text-xs font-display font-black uppercase tracking-wider text-unfest-yellow">
+                                            Daftar Keuntungan Mitra:
+                                        </p>
+                                        <ul className="space-y-2">
+                                            {calculatedCategory.benefit.split('\n').map((b, i) => (
+                                                <li key={i} className="flex items-start text-xs font-semibold">
+                                                    <span className="text-unfest-yellow mr-2">•</span>
+                                                    <span>{b}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="poster-frame-cream p-6 rounded-2xl border-dashed text-center">
+                                    <p className="text-sm font-semibold text-unfest-green/70">
+                                        Silakan isi jumlah followers/pengikut untuk melihat pratinjau kalkulasi benefit otomatis dari Spreadsheet.
+                                    </p>
+                                </div>
+                            )}
                         </div>
-                    )}
+                    </div>
                 </div>
-            );
+            </div>
+        );
+    };
+
+
+    const StatusCheckPage = () => {
+        const [keyword, setKeyword] = React.useState('');
+        const [result, setResult] = React.useState(null);
+
+        const handleSearch = async () => {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+
+                const found = data.find(item =>
+                    (item.NamaMedia || '').toLowerCase().includes(keyword.toLowerCase())
+                );
+
+                setResult(found || false);
+
+            } catch (err) {
+                console.error(err);
+            }
         };
 
-        // ==========================================
-        // MAIN APP FRAME
-        // ==========================================
-        const App = () => {
-            const [currentView, setCurrentView] = useState('landing');
-            const [toast, setToast] = useState(null);
+        return (
+            <div className="pt-20 pb-20 px-4 max-w-3xl mx-auto">
 
-            const showToast = (message, type = 'success') => setToast({ message, type });
+                <h2 className="text-3xl font-serif font-black text-center text-unfest-green mb-6">
+                    CEK STATUS PENDAFTARAN
+                </h2>
 
-            // Membaca langsung dari static config untuk optimalisasi performa & loading cepat
-            const config = useMemo(() => ({
-                jenisMedia: MOCK_DB.masterJenisMedia,
-                kategoriBenefit: MOCK_DB.masterKategoriBenefit,
-                informasiPenting: MOCK_DB.informasiPenting,
-                status: MOCK_DB.masterStatus
-            }), []);
+                <div className="flex gap-3 mb-6">
+                    <input
+                        type="text"
+                        placeholder="Masukkan Nama Media"
+                        value={keyword}
+                        onChange={(e)=>setKeyword(e.target.value)}
+                        className="flex-1 border-2 border-unfest-green rounded-lg px-4 py-3"
+                    />
+
+                    <button
+                        onClick={handleSearch}
+                        className="bg-unfest-green text-white px-6 rounded-lg"
+                    >
+                        Cari
+                    </button>
+                </div>
+    
+                {result && (
+                    <div className="poster-frame-cream p-6 rounded-xl">
+    
+                        <h3 className="font-bold text-xl mb-4">
+                            {result.NamaMedia}
+                        </h3>
+    
+                        <p>
+                            Status :
+                            <strong> {result.StatusPengajuan}</strong>
+                        </p>
+    
+                        <p>
+                            Kategori :
+                            <strong> {result.Kategori}</strong>
+                        </p>
+    
+                        <p>
+                            Catatan Admin :
+                            <strong>
+                                {result.CatatanAdmin || '-'}
+                            </strong>
+                        </p>
+    
+                    </div>
+                )}
+    
+                {result === false && (
+                    <div className="text-center text-red-500">
+                        Data tidak ditemukan
+                    </div>
+                )}
+    
+            </div>
+        );
+    };
+    
+    // ==========================================
+    // COMPONENT Success View
+    // ==========================================
+    const SuccessView = ({ onNavigate }) => (
+        <div className="pt-20 pb-20 px-4 flex justify-center items-center flex-grow">
+            <div className="poster-frame-cream p-8 md:p-12 rounded-3xl max-w-xl w-full text-center relative overflow-hidden">
+                <div className="w-20 h-20 bg-unfest-green text-unfest-yellow border-3 border-unfest-charcoal rounded-full flex items-center justify-center mx-auto mb-6 shadow-md">
+                    <IconCheck />
+                </div>
+
+                <h2 className="font-serif font-black text-3xl sm:text-4xl text-unfest-green uppercase tracking-wide mb-4">
+                    Pendaftaran Terkirim!
+                </h2>
+                
+                <div className="h-0.5 bg-unfest-green/20 mb-6 max-w-xs mx-auto"></div>
+
+                <p className="text-unfest-charcoal/80 font-semibold leading-relaxed mb-8">
+                    Terima kasih telah mendaftar sebagai Media Partner UNFEST 10. Data formulir Anda berhasil direkam di Google Spreadsheet utama kami. Tim panitia akan segera memverifikasi berkas Anda.
+                </p>
+
+                <button 
+                    onClick={() => onNavigate('landing')} 
+                    className="javanese-btn-gold py-4 px-8 rounded-xl font-display font-black text-sm uppercase tracking-widest w-full"
+                >
+                    Kembali Ke Beranda
+                </button>
+            </div>
+        </div>
+    );
+
+    // ==========================================
+    // COMPONENT Admin Dashboard
+    // ==========================================
+    const AdminDashboard = ({ showToast }) => {
+        const [isLoggedIn, setIsLoggedIn] = useState(false);
+        const [password, setPassword] = useState('');
+        const [data, setData] = useState([]);
+        const [loading, setLoading] = useState(true);
+        const [searchTerm, setSearchTerm] = useState('');
+        const [filterStatus, setFilterStatus] = useState('All');
+        const [filterCategory, setFilterCategory] = useState('All');
+        const [filterMedia, setFilterMedia] = useState('All');
+        const [selectedData, setSelectedData] = useState(null);
+        const [catatanAdmin, setCatatanAdmin] = useState('');
+        const [showScriptGuide, setShowScriptGuide] = useState(false);
+        const [searchStatus, setSearchStatus] = useState('');
+        const [statusResult, setStatusResult] = useState(null);
+
+        useEffect(() => {
+            if (isLoggedIn) {
+                loadData();
+                // Set up refresh interval otomatis setiap 60 detik sesuai requirement
+                const interval = setInterval(() => {
+                    console.log("Auto-refreshing dashboard data dari Google Sheet...");
+                    loadData(false); // background refresh tanpa full blocking loading
+                }, 60000);
+                return () => clearInterval(interval);
+            }
+        }, [isLoggedIn]);
+
+        const loadData = async (showBlockingLoader = true) => {
+            if (showBlockingLoader) setLoading(true);
+            try {
+                const result = await ApiService.getAdminData();
+                setData(result.sort((a,b) => new Date(b.tanggal) - new Date(a.tanggal)));
+            } catch (error) {
+                showToast('Gagal menyelaraskan data dengan spreadsheet API.', 'error');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        const handleLogin = (e) => {
+            e.preventDefault();
+            if (password === 'cacamaricaee') {
+                setIsLoggedIn(true);
+                showToast('Akses masuk admin berhasil disetujui!', 'success');
+            } else {
+                showToast('Kata sandi salah!', 'error');
+            }
+        };
+
+        const handleUpdateStatus = async (id, newStatus) => {
+            try {
+                // Update state lokal terlebih dahulu (Optimistic UI)
+                setData(prev => prev.map(item => item.id === id ? { ...item, status: newStatus } : item));
+                
+                const success = await ApiService.updateStatus(id, newStatus);
+                if (success) {
+                    showToast(`Status pengajuan berhasil diubah menjadi ${newStatus}`, 'success');
+                    if (selectedData && selectedData.id === id) {
+                        setSelectedData({...selectedData, status: newStatus});
+                    }
+                } else {
+                    showToast('Penyimpanan status ke spreadsheet ditolak.', 'error');
+                    loadData();
+                }
+            } catch (error) {
+                showToast('Gagal mengubah status pendaftar.', 'error');
+                loadData();
+            }
+        };
+
+        const handleSaveNote = async (id) => {
+
+            const success = await ApiService.updateNote(
+                id,
+                catatanAdmin
+            );
+        
+            if(success){
+        
+                setData(prev =>
+                    prev.map(item =>
+                        item.id === id
+                        ? {
+                            ...item,
+                            catatanAdmin: catatanAdmin
+                        }
+                        : item
+                    )
+                );
+        
+                showToast(
+                    "Catatan berhasil disimpan",
+                    "success"
+                );
+        
+            } else {
+        
+                showToast(
+                    "Gagal menyimpan catatan",
+                    "error"
+                );
+        
+            }
+        };
+        
+        const handleCheckStatus = () => {
+
+          const result = data.find(item => {
 
             return (
-                <div className="flex flex-col min-h-screen relative">
-                    <Navbar onViewChange={setCurrentView} currentView={currentView} />
-
-                    <main className="flex-grow flex flex-col">
-                        {currentView === 'landing' && <LandingPage onNavigate={setCurrentView} config={config} />}
-                        {currentView === 'form' && <RegistrationForm config={config} showToast={showToast} onSubmitSuccess={() => setCurrentView('success')} />}
-                        {currentView === 'success' && <SuccessView onNavigate={setCurrentView} />}
-                       
-                        {currentView === 'status' && (
-                            <StatusCheckPage />
-                        )}
-                        
-                        {currentView === 'admin' && <AdminDashboard showToast={showToast} />}
-                    </main>
-
-                    {currentView !== 'admin' && (
-                        <footer className="border-t-6 border-unfest-yellow bg-unfest-green py-8 text-center text-unfest-cream">
-                            <div className="max-w-7xl mx-auto px-4 flex flex-col items-center gap-3">
-                                <div className="text-unfest-yellow">
-                                </div>
-                                <p className="font-display font-black tracking-widest text-xs uppercase">
-                                    PANITIA PENYELENGGARA UNFEST 10
-                                </p>
-                                <p className="text-xs text-unfest-cream/60">
-                                    Hak Cipta Terpelihara &copy; 2026 UNFEST 10.
-                                </p>
-                            </div>
-                        </footer>
-                    )}
-
-                    {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
-                </div>
+              item.namaMedia?.toLowerCase() === searchStatus.toLowerCase()
+              ||
+              item.wa?.includes(searchStatus)
             );
+
+          });
+
+          setStatusResult(result || null);
+        };
+        
+        const handleExportCSV = () => {
+            const headers = ['Tanggal', 'Nama Media', 'Jenis', 'PIC', 'Nomor WA', 'Followers', 'Kategori', 'Tautan Media', 'Status'];
+            const csvData = data.map(row => [
+                new Date(row.tanggal).toLocaleDateString('id-ID'),
+                `"${row.namaMedia}"`, row.jenisMedia, `"${row.pic}"`, `'${row.wa}`, row.followers, row.kategori, row.url, row.status
+            ].join(','));
+            
+            const csvContent = "data:text/csv;charset=utf-8," + headers.join(',') + "\n" + csvData;
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `Data_Pendaftar_Medpart_UNFEST_${new Date().getTime()}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         };
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
-</body>
-</html>
+        const stats = useMemo(() => {
+            const totalFollowers = data.reduce((acc, curr) => acc + (curr.followers || 0), 0);
+            return {
+                total: data.length,
+                followers: totalFollowers,
+                pending: data.filter(d => d.status === 'Pending').length,
+                diproses: data.filter(d => d.status === 'Diproses').length,
+                diterima: data.filter(d => d.status === 'Diterima').length,
+                ditolak: data.filter(d => d.status === 'Ditolak').length,
+                bronze: data.filter(d => d.kategori === 'Bronze').length,
+                silver: data.filter(d => d.kategori === 'Silver').length,
+                gold: data.filter(d => d.kategori === 'Gold').length,
+                platinum: data.filter(d => d.kategori === 'Platinum').length,
+            };
+        }, [data]);
+
+        const filteredData = data.filter(item => {
+            const matchesSearch = item.namaMedia.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                                  item.pic.toLowerCase().includes(searchTerm.toLowerCase());
+            const matchesStatus = filterStatus === 'All' || item.status === filterStatus;
+            const matchesCategory = filterCategory === 'All' || item.kategori === filterCategory;
+            const matchesMedia = filterMedia === 'All' || item.jenisMedia === filterMedia;
+            return matchesSearch && matchesStatus && matchesCategory && matchesMedia;
+        });
+
+        if (!isLoggedIn) {
+            return (
+                <div className="pt-20 pb-20 px-4 flex justify-center items-center flex-grow">
+                    <div className="poster-frame-cream p-8 rounded-2xl max-w-md w-full relative">
+                        <h2 className="font-serif font-black text-2xl text-center text-unfest-green uppercase mb-6">
+                            PANEL LOGIN ADMIN
+                        </h2>
+                        <form onSubmit={handleLogin} className="space-y-4">
+                            <div>
+                                <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wide mb-1">
+                                    Masukkan Kata Sandi Pengawas
+                                </label>
+                                <input 
+                                    type="password" 
+                                    value={password} 
+                                    onChange={e => setPassword(e.target.value)} 
+                                    required
+                                    className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal focus:outline-none" 
+                                />
+                            </div>
+                            <button type="submit" className="w-full py-3 javanese-btn-gold font-display font-black uppercase text-sm">
+                                Akses Dasbor Admin
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            );
+        }
+
+        return (
+            <div className="pt-8 pb-20 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto flex-grow flex flex-col">
+                
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                    <div>
+                        <h2 className="font-serif font-black text-3xl text-unfest-cream uppercase">
+                            Dasbor Manajemen Panitia
+                        </h2>
+                        <p className="text-unfest-cream/70 text-sm">
+                            Verifikasi, kurasi, dan tinjau berkas registrasi dari Google Sheets.
+                        </p>
+                    </div>
+                    <div className="flex flex-wrap gap-3">
+                        <button 
+                            onClick={() => loadData(true)} 
+                            className="px-4 py-2.5 bg-unfest-green text-unfest-cream border-2 border-unfest-yellow hover:bg-unfest-yellow hover:text-unfest-charcoal rounded-lg text-xs font-display font-bold uppercase flex items-center gap-2 transition-all"
+                        >
+                            <IconLoader />
+                            <span>Refresh Data</span>
+                        </button>
+                        <button 
+                            onClick={() => setShowScriptGuide(true)} 
+                            className="px-4 py-2.5 bg-unfest-green text-unfest-cream border-2 border-unfest-yellow hover:bg-unfest-yellow hover:text-unfest-charcoal rounded-lg text-xs font-display font-bold uppercase transition-all"
+                        >
+                            Setup Integrasi G-Sheets
+                        </button>
+                        <button 
+                            onClick={handleExportCSV} 
+                            className="px-4 py-2.5 javanese-btn-gold text-xs font-display font-black uppercase"
+                        >
+                            Ekspor Berkas CSV
+                        </button>
+                    </div>
+                </div>
+
+                {/* Stats Panels Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-4 mb-8">
+                    {[
+                        { label: 'Total Media', value: stats.total, color: 'text-unfest-cream' },
+                        { label: 'Pending', value: stats.pending, color: 'text-unfest-yellow' },
+                        { label: 'Diproses', value: stats.diproses, color: 'text-orange-400' },
+                        { label: 'Diterima', value: stats.diterima, color: 'text-green-400' },
+                        { label: 'Ditolak', value: stats.ditolak, color: 'text-unfest-red' },
+                        { label: 'Bronze', value: stats.bronze, color: 'text-orange-300' },
+                        { label: 'Silver', value: stats.silver, color: 'text-slate-300' },
+                        { label: 'Gold', value: stats.gold, color: 'text-yellow-300' },
+                        { label: 'Platinum', value: stats.platinum, color: 'text-cyan-300' }
+                    ].map((stat, i) => (
+                        <div key={i} className="poster-frame-green p-4 rounded-xl text-center relative overflow-hidden flex flex-col justify-center">
+                            <p className="text-[10px] text-unfest-cream/70 uppercase font-mono tracking-wider mb-1 leading-tight">{stat.label}</p>
+                            <p className={`text-xl font-display font-black ${stat.color} leading-none mt-1`}>{stat.value}</p>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Filters & Data Table */}
+                <div className="poster-frame-cream rounded-2xl flex-grow flex flex-col overflow-hidden">
+                    
+                    <div className="p-4 border-b-2 border-unfest-green flex flex-col lg:flex-row gap-4 justify-between bg-unfest-creamDark/10">
+                        
+                        <div className="relative w-full lg:w-96">
+                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-unfest-green">
+                                <IconSearch />
+                            </div>
+                            <input 
+                                type="text" 
+                                placeholder="Cari nama media atau nama PIC..." 
+                                value={searchTerm} 
+                                onChange={e => setSearchTerm(e.target.value)}
+                                className="w-full pl-10 pr-4 py-2 border-2 border-unfest-green bg-white rounded-lg text-sm font-medium focus:outline-none" 
+                            />
+                        </div>
+
+                        <div className="flex flex-wrap gap-2">
+                            <select 
+                                value={filterMedia}
+                                onChange={e => setFilterMedia(e.target.value)}
+                                className="px-3 py-2 border-2 border-unfest-green bg-white rounded-lg text-xs font-bold text-unfest-green"
+                            >
+                                <option value="All">Semua Jenis Media</option>
+                                {MOCK_DB.masterJenisMedia.map(m => <option key={m} value={m}>{m}</option>)}
+                            </select>
+
+                            <select 
+                                value={filterCategory}
+                                onChange={e => setFilterCategory(e.target.value)}
+                                className="px-3 py-2 border-2 border-unfest-green bg-white rounded-lg text-xs font-bold text-unfest-green"
+                            >
+                                <option value="All">Semua Kategori</option>
+                                <option value="Bronze">Bronze</option>
+                                <option value="Silver">Silver</option>
+                                <option value="Gold">Gold</option>
+                                <option value="Platinum">Platinum</option>
+                            </select>
+
+                            <div className="flex border-2 border-unfest-green rounded-lg overflow-hidden">
+                                {['All', 'Pending', 'Diproses', 'Diterima', 'Ditolak'].map(status => (
+                                    <button 
+                                        key={status} 
+                                        onClick={() => setFilterStatus(status)}
+                                        className={`px-3 py-1.5 text-xs font-bold transition-all ${filterStatus === status ? 'bg-unfest-green text-unfest-cream' : 'bg-white text-unfest-green hover:bg-unfest-creamDark/20'}`}
+                                    >
+                                        {status}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="overflow-x-auto flex-grow">
+                        <table className="w-full text-left text-sm whitespace-nowrap">
+                            <thead className="bg-unfest-green text-unfest-cream">
+                                <tr>
+                                    <th className="px-6 py-4 font-display font-black uppercase text-xs tracking-wider">Media Publikasi</th>
+                                    <th className="px-6 py-4 font-display font-black uppercase text-xs tracking-wider">PIC & Kontak</th>
+                                    <th className="px-6 py-4 font-display font-black uppercase text-xs tracking-wider">Kategori (Sistem)</th>
+                                    <th className="px-6 py-4 font-display font-black uppercase text-xs tracking-wider">Status Pengajuan</th>
+                                    <th className="px-6 py-4 font-display font-black uppercase text-xs tracking-wider text-right">Tindakan</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y-2 divide-unfest-green/20">
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="5" className="px-6 py-12 text-center text-unfest-green">
+                                            <div className="flex justify-center mb-2"><IconLoader /></div>
+                                            <span className="font-display font-bold">Menghubungkan & menyelaraskan data dengan Google Sheet...</span>
+                                        </td>
+                                    </tr>
+                                ) : filteredData.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="5" className="px-6 py-12 text-center text-unfest-green font-display font-bold">
+                                            Tidak ditemukan data pendaftar yang sesuai kriteria.
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    filteredData.map((row) => (
+                                        <tr key={row.id} className="hover:bg-unfest-creamDark/10 transition-colors">
+                                            <td className="px-6 py-4">
+                                                <div className="font-display font-black text-unfest-green uppercase">{row.namaMedia}</div>
+                                                <div className="text-xs font-mono font-bold text-unfest-charcoal/70">{row.jenisMedia}</div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="font-semibold text-unfest-charcoal">{row.pic}</div>
+                                                <div className="text-xs font-mono font-bold text-unfest-red">{row.wa}</div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <span className="inline-block px-2 py-1 rounded bg-unfest-green text-unfest-yellow text-xs font-mono font-bold">
+                                                    {row.kategori} ({row.followers.toLocaleString('id-ID')})
+                                                </span>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <span className={`inline-block px-3 py-1 rounded text-xs font-display font-black uppercase ${
+                                                    row.status === 'Pending' ? 'bg-unfest-yellow text-unfest-charcoal' :
+                                                    row.status === 'Diproses' ? 'bg-orange-500 text-white' :
+                                                    row.status === 'Diterima' ? 'bg-green-600 text-white' :
+                                                    'bg-unfest-red text-unfest-cream'
+                                                }`}>
+                                                    {row.status}
+                                                </span>
+                                            </td>
+                                            <td className="px-6 py-4 text-right">
+                                                <button
+                                                    onClick={() => {
+                                                        setSelectedData(row);
+                                                        setCatatanAdmin(row.catatanAdmin || '');
+                                                    }}
+                                                    className="px-3 py-1.5 bg-unfest-green text-unfest-cream hover:bg-unfest-yellow hover:text-unfest-charcoal border border-unfest-charcoal rounded text-xs font-display font-bold uppercase transition-all"
+                                                >
+                                                    Lihat Detail
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                {/* Detail Modal Overlay */}
+                {selectedData && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-unfest-charcoal/80 backdrop-blur-sm">
+                        <div className="bg-unfest-cream border-4 border-unfest-green rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
+                            <div className="p-6 border-b-2 border-unfest-green flex justify-between items-center bg-unfest-green text-unfest-cream">
+                                <h3 className="font-serif font-black text-xl uppercase tracking-wide">
+                                    Lembar Berkas Pendaftar
+                                </h3>
+                                <button onClick={() => setSelectedData(null)} className="text-unfest-cream hover:text-unfest-yellow">
+                                    <IconX />
+                                </button>
+                            </div>
+                            <div className="p-6 space-y-6">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div>
+                                        <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-1">Nama Media</p>
+                                        <p className="font-display font-black text-lg text-unfest-charcoal uppercase">{selectedData.namaMedia}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-1">Kategori (Sistem)</p>
+                                        <p className="font-display font-black text-lg text-unfest-red uppercase">{selectedData.kategori}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-1">Penanggung Jawab (PIC)</p>
+                                        <p className="font-bold text-unfest-charcoal">{selectedData.pic}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-1">Kontak WhatsApp</p>
+                                        <a href={`https://wa.me/${selectedData.wa}`} target="_blank" className="font-mono font-bold text-unfest-red hover:underline block">
+                                            {selectedData.wa} ➔
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-1">Jumlah Pengikut</p>
+                                        <p className="font-mono font-bold text-lg text-unfest-charcoal">{selectedData.followers.toLocaleString('id-ID')}</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-1">Platform Tautan</p>
+                                        {selectedData.url ? (
+                                            <a href={selectedData.url.startsWith('http') ? selectedData.url : `https://${selectedData.url}`} target="_blank" className="inline-block px-3 py-1.5 bg-unfest-green text-unfest-cream border border-unfest-green rounded text-xs font-display font-bold uppercase transition-all hover:bg-unfest-yellow hover:text-unfest-green mt-1">
+                                                Lihat Media ➔
+                                            </a>
+                                        ) : (
+                                            <span className="text-xs text-unfest-charcoal/50">-</span>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Bukti Screenshots preview */}
+                                <div className="p-4 border-2 border-unfest-green rounded-xl bg-unfest-creamDark/15">
+                                    <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-2">Unggahan Berkas Bukti</p>
+                                    {selectedData.bukti && selectedData.bukti.startsWith('data:') ? (
+                                        <img src={selectedData.bukti} alt="Bukti Analitik" className="max-h-64 rounded-lg border-2 border-unfest-green mx-auto object-contain bg-white" />
+                                    ) : selectedData.bukti && selectedData.bukti.startsWith('http') ? (
+                                        <div className="text-center py-4">
+                                            <a href={selectedData.bukti} target="_blank" className="inline-block px-4 py-2 bg-unfest-red text-unfest-cream border-2 border-unfest-charcoal rounded-lg text-xs font-display font-black uppercase shadow-[3px_3px_0px_#ffd300]">
+                                                Lihat Bukti ➔
+                                            </a>
+                                        </div>
+                                    ) : (
+                                        <div className="py-6 text-center text-xs font-mono text-unfest-green/75">
+                                            Tidak ada berkas fisik yang diunggah / Menggunakan Mockup URL ({selectedData.bukti || "kosong"})
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="border-t-2 border-unfest-green/25 pt-6">
+
+                                    <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-2">
+                                        Catatan Admin
+                                    </p>
+                                
+                                    <textarea
+                                        value={catatanAdmin}
+                                        onChange={(e)=>setCatatanAdmin(e.target.value)}
+                                        rows="4"
+                                        className="w-full border-2 border-unfest-green rounded-lg p-3"
+                                        placeholder="Tulis catatan untuk media partner..."
+                                    />
+                                
+                                    <button
+                                        onClick={() => handleSaveNote(selectedData.id)}
+                                        className="mt-3 px-4 py-2 bg-unfest-green text-white rounded-lg"
+                                    >
+                                        Simpan Catatan
+                                    </button>
+                                
+                                </div>
+
+                                {/* Action buttons to update database state */}
+                                <div className="border-t-2 border-unfest-green/25 pt-6 text-center">
+                                    <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-3">Tentukan Keputusan Status</p>
+                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                        <button 
+                                            onClick={() => handleUpdateStatus(selectedData.id, 'Diterima')} 
+                                            className={`py-2.5 rounded-lg font-display font-black text-xs uppercase tracking-wider border-2 border-unfest-charcoal transition-all ${selectedData.status === 'Diterima' ? 'bg-green-600 text-white' : 'bg-white text-green-600'}`}
+                                        >
+                                            Terima
+                                        </button>
+                                        <button 
+                                            onClick={() => handleUpdateStatus(selectedData.id, 'Diproses')} 
+                                            className={`py-2.5 rounded-lg font-display font-black text-xs uppercase tracking-wider border-2 border-unfest-charcoal transition-all ${selectedData.status === 'Diproses' ? 'bg-orange-500 text-white' : 'bg-white text-orange-500'}`}
+                                        >
+                                            Diproses
+                                        </button>
+                                        <button 
+                                            onClick={() => handleUpdateStatus(selectedData.id, 'Ditolak')} 
+                                            className={`py-2.5 rounded-lg font-display font-black text-xs uppercase tracking-wider border-2 border-unfest-charcoal transition-all ${selectedData.status === 'Ditolak' ? 'bg-unfest-red text-unfest-cream' : 'bg-white text-unfest-red'}`}
+                                        >
+                                            Tolak
+                                        </button>
+                                        <button 
+                                            onClick={() => handleUpdateStatus(selectedData.id, 'Pending')} 
+                                            className={`py-2.5 rounded-lg font-display font-black text-xs uppercase tracking-wider border-2 border-unfest-charcoal transition-all ${selectedData.status === 'Pending' ? 'bg-unfest-yellow text-unfest-charcoal' : 'bg-white text-unfest-charcoal'}`}
+                                        >
+                                            Pending
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Google App Script Guide Modal */}
+                {showScriptGuide && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-unfest-charcoal/85 backdrop-blur-sm">
+                        <div className="bg-unfest-cream border-4 border-unfest-green rounded-2xl w-full max-w-4xl h-[85vh] flex flex-col shadow-2xl">
+                            <div className="p-4 border-b-2 border-unfest-green flex justify-between items-center bg-unfest-green text-unfest-cream">
+                                <div>
+                                    <h3 className="font-serif font-black text-lg uppercase">Integrasi Sinkronisasi Google Sheets</h3>
+                                    <p className="text-xs text-unfest-yellow mt-0.5">Panduan integrasi Google Sheets & Google Drive menggunakan Google Apps Script.</p>
+                                </div>
+                                <button onClick={() => setShowScriptGuide(false)} className="text-unfest-cream hover:text-unfest-yellow">
+                                    <IconX />
+                                </button>
+                            </div>
+                            <div className="flex-grow p-0 overflow-hidden flex flex-col">
+                                <div className="p-4 bg-unfest-creamDark/20 text-xs font-semibold overflow-y-auto border-b border-unfest-green">
+                                    <ol className="list-decimal pl-5 space-y-2 text-unfest-charcoal">
+                                        <li>Buat Spreadsheet baru di Google Drive Anda.</li>
+                                        <li>Buat nama lembaran Sheet sebagai berikut: <strong className="text-unfest-red">Data Pendaftaran</strong>, <strong className="text-unfest-red">Master Jenis Media</strong>, <strong className="text-unfest-red">Master Kategori Benefit</strong>, <strong className="text-unfest-red">FAQ</strong>.</li>
+                                        <li>Buka menu <strong className="text-unfest-green">Extensions &gt; Apps Script</strong>. Hapus template bawaan, lalu tempelkan kode di bawah ini.</li>
+                                        <li>Klik <strong className="text-unfest-green">Deploy &gt; New Deployment</strong>, pilih tipe <strong className="text-unfest-green">Web App</strong> dengan aksesibilitas <strong className="text-unfest-green">Anyone</strong>.</li>
+                                        <li>Salin URL Web App hasil deploy dan tautkan pada variable URL Fetch API website ini.</li>
+                                    </ol>
+                                </div>
+                                <textarea 
+                                    readOnly 
+                                    className="flex-grow w-full bg-unfest-charcoal text-green-400 p-4 font-mono text-xs resize-none focus:outline-none" 
+                                    defaultValue={`
+
+// =======================================================// GOOGLE APPS SCRIPT: SINKRONISASI DATABASE SPREADSHEET// =======================================================
+
+const SPREADSHEET_ID = 'GANTI_DENGAN_ID_SPREADSHEET_ANDA';const DRIVE_FOLDER_ID = 'GANTI_DENGAN_ID_FOLDER_DRIVE_ANDA'; // Folder untuk file bukti pendaftaran
+
+function doGet(e) {const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+
+const dataSheet = ss.getSheetByName('Data Pendaftaran');const data = dataSheet.getDataRange().getValues().slice(1);const result = data.map((r, i) => ({id: (i + 2).toString(),NamaMedia: r[0], JenisMedia: r[1], NamaPIC: r[2], "CP (Nomor WA)": r[3],JumlahFollowers: Number(r[4]), LinkMediaSosial: r[5], BuktiMedia: r[6], Kategori: r[7], StatusPengajuan: r[8], tanggal: r[9]}));return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);}
+
+function doPost(e) {const data = JSON.parse(e.postData.contents);const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+
+if (data.action === 'submitForm') {const followers = Number(data.JumlahFollowers);
+
+// Konfigurasi kategori benefit fallback statis di sisi Apps Script
+let kategori = "Bronze";
+if (followers >= 0 && followers <= 4999) kategori = "Bronze";
+else if (followers >= 5000 && followers <= 29999) kategori = "Silver";
+else if (followers >= 30000 && followers <= 79999) kategori = "Gold";
+else if (followers >= 80000) kategori = "Platinum";
+
+// Unggah tangkapan layar / bukti ke Google Drive
+let fileUrl = "";
+if (data.BuktiMedia && data.BuktiMedia.startsWith('data:')) {
+  try {
+    const folder = DriveApp.getFolderById(DRIVE_FOLDER_ID);
+    const base64Data = data.BuktiMedia.split(',')[1];
+    const mimeType = data.BuktiMedia.match(/data:([a-zA-Z0-9]+\\/[a-zA-Z0-9-.+]+).*,.*/)[1];
+    const blob = Utilities.newBlob(Utilities.base64Decode(base64Data), mimeType, data.NamaMedia + "_BuktiAnalitik");
+    const file = folder.createFile(blob);
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+    fileUrl = file.getUrl();
+  } catch(err) {
+    fileUrl = "Gagal Upload: " + err.toString();
+  }
+} else {
+  fileUrl = data.BuktiMedia;
+}
+
+// Simpan baris pendaftar baru ke lembar 'Data Pendaftaran'
+const sheet = ss.getSheetByName('Data Pendaftaran');
+sheet.appendRow([
+  data.NamaMedia, data.JenisMedia, data.NamaPIC, data["CP (Nomor WA)"], 
+  followers, data.LinkMediaSosial, fileUrl, kategori, "Pending", new Date().toISOString()
+]);
+
+return ContentService.createTextOutput(JSON.stringify({success: true})).setMimeType(ContentService.MimeType.JSON);
+
+}
+
+if (data.action === 'updateStatus') {const sheet = ss.getSheetByName('Data Pendaftaran');sheet.getRange(Number(data.id), 9).setValue(data.status);return ContentService.createTextOutput(JSON.stringify({success: true})).setMimeType(ContentService.MimeType.JSON);}}`}/>)});};
+
+    // ==========================================
+    // MAIN APP FRAME
+    // ==========================================
+    const App = () => {
+        const [currentView, setCurrentView] = useState('landing');
+        const [toast, setToast] = useState(null);
+
+        const showToast = (message, type = 'success') => setToast({ message, type });
+
+        // Membaca langsung dari static config untuk optimalisasi performa & loading cepat
+        const config = useMemo(() => ({
+            jenisMedia: MOCK_DB.masterJenisMedia,
+            kategoriBenefit: MOCK_DB.masterKategoriBenefit,
+            informasiPenting: MOCK_DB.informasiPenting,
+            status: MOCK_DB.masterStatus
+        }), []);
+
+        return (
+            <div className="flex flex-col min-h-screen relative">
+                <Navbar onViewChange={setCurrentView} currentView={currentView} />
+
+                <main className="flex-grow flex flex-col">
+                    {currentView === 'landing' && <LandingPage onNavigate={setCurrentView} config={config} />}
+                    {currentView === 'form' && <RegistrationForm config={config} showToast={showToast} onSubmitSuccess={() => setCurrentView('success')} />}
+                    {currentView === 'success' && <SuccessView onNavigate={setCurrentView} />}
+                   
+                    {currentView === 'status' && (
+                        <StatusCheckPage />
+                    )}
+                    
+                    {currentView === 'admin' && <AdminDashboard showToast={showToast} />}
+                </main>
+
+                {currentView !== 'admin' && (
+                    <footer className="border-t-6 border-unfest-yellow bg-unfest-green py-8 text-center text-unfest-cream">
+                        <div className="max-w-7xl mx-auto px-4 flex flex-col items-center gap-3">
+                            <div className="text-unfest-yellow">
+                            </div>
+                            <p className="font-display font-black tracking-widest text-xs uppercase">
+                                PANITIA PENYELENGGARA UNFEST 10
+                            </p>
+                            <p className="text-xs text-unfest-cream/60">
+                                Hak Cipta Terpelihara &copy; 2026 UNFEST 10.
+                            </p>
+                        </div>
+                    </footer>
+                )}
+
+                {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+            </div>
+        );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+</script>
