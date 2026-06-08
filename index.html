@@ -476,33 +476,37 @@
 
                 <section className="py-16 bg-unfest-cream border-t-6 border-unfest-yellow">
                     <div className="max-w-3xl mx-auto px-4">
+                
                         <div className="text-center mb-12">
                             <h2 className="font-serif font-black text-3xl sm:text-4xl text-unfest-charcoal uppercase tracking-tight mt-2">
                                 INFO PENTING PENDAFTARAN
                             </h2>
                         </div>
-
+                
                         <div className="space-y-4">
                             {config.informasiPenting.map((info, index) => (
-                              <div
-                                key={index}
-                                className="bg-unfest-cream rounded-xl p-4 border-l-4 border-unfest-yellow"
-                              >
-                                <div className="flex items-start gap-3">
-                                  <div className="bg-unfest-yellow text-unfest-charcoal rounded-full p-1">
-                                    <IconCheck />
-                                  </div>
-                            
-                                  <p className="font-semibold text-unfest-green">
-                                    {info}
-                                  </p>
+                                <div
+                                    key={index}
+                                    className="bg-unfest-cream rounded-xl p-4 border-l-4 border-unfest-yellow"
+                                >
+                                    <div className="flex items-start gap-3">
+                                        <div className="bg-unfest-yellow text-unfest-charcoal rounded-full p-1">
+                                            <IconCheck />
+                                        </div>
+                
+                                        <p className="font-semibold text-unfest-green">
+                                            {info}
+                                        </p>
+                                    </div>
                                 </div>
-                              </div>
                             ))}
-                           </div> 
-                        
+                        </div>
+                
                     </div>
+                
                 </section>
+
+                
                 <section className="py-12 bg-unfest-green">
                     <div className="max-w-3xl mx-auto px-4">
                 
@@ -533,10 +537,15 @@
                 
                     </div>
                 </section>
-                
+
             </div>
         );
     };
+
+    // ==========================================
+    // COMPONENT Registration Form
+    // ==========================================
+    const RegistrationForm = ({ config, onSubmitSuccess, showToast }) => {
 
     // ==========================================
     // COMPONENT Registration Form
