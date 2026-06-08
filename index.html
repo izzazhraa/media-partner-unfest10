@@ -1583,7 +1583,26 @@ return ContentService.createTextOutput(JSON.stringify({success: true})).setMimeT
 
 }
 
-if (data.action === 'updateStatus') {const sheet = ss.getSheetByName('Data Pendaftaran');sheet.getRange(Number(data.id), 9).setValue(data.status);return ContentService.createTextOutput(JSON.stringify({success: true})).setMimeType(ContentService.MimeType.JSON);}}`}/>)});};
+if (data.action === 'updateStatus') 
+{const sheet = ss.getSheetByName('Data Pendaftaran');
+
+sheet.getRange(Number(data.id), 9)
+.setValue(data.status);
+
+return ContentService
+    .createTextOutput(JSON.stringify({success: true}))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+}
+                            `}
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
 
     // ==========================================
     // MAIN APP FRAME
