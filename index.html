@@ -176,7 +176,6 @@
                     "CP (Nomor WA)": formData.wa,
                     "JumlahFollowers": followers.toString(),
                     "LinkMediaSosial": formData.url,
-                    "BuktiMedia": formData.bukti || "", // base64 / URL
                     "Kategori": kategori,
                     "StatusPengajuan": "Pending"
                 };
@@ -205,7 +204,6 @@
                         wa: formData.wa,
                         followers: followers,
                         url: formData.url,
-                        bukti: formData.bukti || "Screenshot_Uploaded_File",
                         kategori: kategori,
                         status: "Pending",
                         tanggal: new Date().toISOString()
@@ -237,7 +235,6 @@
                         wa: item["CP (Nomor WA)"] || item.wa || "-",
                         followers: parseInt(item.JumlahFollowers || item.followers || 0),
                         url: item.LinkMediaSosial || item.url || "",
-                        bukti: item.BuktiMedia || item.bukti || "",
                         kategori: item.Kategori || item.kategori || "Bronze",
                         status: item.StatusPengajuan || item.status || "Pending",
                         catatanAdmin: item.CatatanAdmin || "",
@@ -544,9 +541,7 @@
                 wa: '',
                 followers: '',
                 url: '',
-                bukti: null
             });
-            const [fileName, setFileName] = useState('');
             const [isSubmitting, setIsSubmitting] = useState(false);
             const [calculatedCategory, setCalculatedCategory] = useState(null);
             const [agreeBenefit, setAgreeBenefit] = useState(false);
@@ -568,32 +563,6 @@
                 setFormData(prev => ({ ...prev, [name]: value }));
             };
 
-            const handleFileChange = (e) => {
-                const file = e.target.files[0];
-                if (!file) return;
-
-                if (file.size > 10 * 1024 * 1024) {
-                    showToast('Batas maksimal ukuran berkas adalah 10MB!', 'error');
-                    e.target.value = '';
-                    return;
-                }
-
-                const allowedFormats = ['image/jpeg', 'image/png', 'application/pdf'];
-                if (!allowedFormats.includes(file.type)) {
-                    showToast('Format berkas tidak valid! Harap gunakan JPG, PNG, atau PDF.', 'error');
-                    e.target.value = '';
-                    return;
-                }
-
-                setFileName(file.name);
-                
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    setFormData(prev => ({ ...prev, bukti: reader.result }));
-                };
-                reader.readAsDataURL(file);
-            };
-
             const handleSubmit = async (e) => {
                 e.preventDefault();
 
@@ -606,11 +575,6 @@
                     new URL(formData.url.startsWith('http') ? formData.url : `https://${formData.url}`);
                 } catch (_) {
                     showToast('Harap masukkan tautan media sosial yang valid!', 'error');
-                    return;
-                }
-
-                if (!formData.bukti) {
-                    showToast('Harap unggah bukti analitik media Anda!', 'error');
                     return;
                 }
 
@@ -631,9 +595,7 @@
                         wa: '',
                         followers: '',
                         url: '',
-                        bukti: null
                     });
-                    setFileName('');
                     setCalculatedCategory(null);
                     
                     onSubmitSuccess();
@@ -774,28 +736,6 @@
                                             className="w-full bg-white border-2 border-unfest-green rounded-lg px-4 py-3 text-unfest-charcoal font-medium focus:outline-none"
                                             placeholder="Cth: instagram.com/gamelangigs" 
                                         />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label className="block text-xs font-display font-black text-unfest-green uppercase tracking-wider mb-2">
-                                        Unggah Berkas Bukti Analitik *
-                                    </label>
-                                    <div className="relative border-3 border-dashed border-unfest-green hover:border-unfest-red rounded-xl p-6 text-center transition-all bg-unfest-creamDark/20 cursor-pointer">
-                                        <input 
-                                            type="file" 
-                                            required 
-                                            accept=".jpg,.jpeg,.png,.pdf" 
-                                            onChange={handleFileChange}
-                                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" 
-                                        />
-                                        <div className="flex flex-col items-center pointer-events-none">
-                                            <IconUpload />
-                                            <p className="text-sm text-unfest-green font-display font-bold">
-                                                {fileName ? <span className="text-unfest-red">{fileName}</span> : 'Ketuk atau Seret Berkas Di Sini'}
-                                            </p>
-                                            <p className="text-[11px] text-unfest-charcoal/65 mt-1">Maksimal Ukuran Berkas: 10MB. Format: JPG, PNG, PDF</p>
-                                        </div>
                                     </div>
                                 </div>
 
@@ -1414,24 +1354,6 @@
                                                 <span className="text-xs text-unfest-charcoal/50">-</span>
                                             )}
                                         </div>
-                                    </div>
-
-                                    {/* Bukti Screenshots preview */}
-                                    <div className="p-4 border-2 border-unfest-green rounded-xl bg-unfest-creamDark/15">
-                                        <p className="text-[10px] font-mono font-bold text-unfest-green uppercase mb-2">Unggahan Berkas Bukti</p>
-                                        {selectedData.bukti && selectedData.bukti.startsWith('data:') ? (
-                                            <img src={selectedData.bukti} alt="Bukti Analitik" className="max-h-64 rounded-lg border-2 border-unfest-green mx-auto object-contain bg-white" />
-                                        ) : selectedData.bukti && selectedData.bukti.startsWith('http') ? (
-                                            <div className="text-center py-4">
-                                                <a href={selectedData.bukti} target="_blank" className="inline-block px-4 py-2 bg-unfest-red text-unfest-cream border-2 border-unfest-charcoal rounded-lg text-xs font-display font-black uppercase shadow-[3px_3px_0px_#ffd300]">
-                                                    Lihat Bukti ➔
-                                                </a>
-                                            </div>
-                                        ) : (
-                                            <div className="py-6 text-center text-xs font-mono text-unfest-green/75">
-                                                Tidak ada berkas fisik yang diunggah / Menggunakan Mockup URL ({selectedData.bukti || "kosong"})
-                                            </div>
-                                        )}
                                     </div>
 
                                     <div className="border-t-2 border-unfest-green/25 pt-6">
