@@ -599,10 +599,16 @@
             const [calculatedCategory, setCalculatedCategory] = useState(null);
             const [agreeBenefit, setAgreeBenefit] = useState(false);
 
+            console.log("config:", config);
+            console.log("kategoriBenefit:", config?.kategoriBenefit);
+            console.log("followers:", formData.followers);
+            
             useEffect(() => {
                 if (formData.followers && config?.kategoriBenefit) {
-                    const count = parseInt(formData.followers);
-                    const found = config.kategoriBenefit.find(c => count >= c.min && count <= c.max);
+                    const count = Number(formData.followers);
+                    const found = config.kategoriBenefit.find(
+                        c => count >= Number(c.min) && count <= Number(c.max)
+                    );
                     setCalculatedCategory(found || null);
                 } else {
                     setCalculatedCategory(null);
