@@ -861,8 +861,10 @@
                                             <ul className="space-y-2">
                                                 {calculatedCategory.benefit.split('\n').map((b, i) => (
                                                     <li key={i} className="flex items-start text-xs font-semibold">
-                                                        <span className="text-unfest-yellow mr-2">•</span>
-                                                        <span>{b}</span>
+                                                        <span className="text-unfest-green mr-2">•</span>
+                                                        <span className="text-red-500 font-bold">
+                                                            {b}
+                                                        </span>
                                                     </li>
                                                 ))}
                                             </ul>
